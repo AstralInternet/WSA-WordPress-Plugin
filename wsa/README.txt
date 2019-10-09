@@ -2,7 +2,7 @@
 Contributors: @astralinternet, @neutrall, @Sleyeur
 Tags: cache, purge, wsa, website acceleration
 Requires at least: 3.5
-Tested up to: 5.2.2
+Tested up to: 5.2.3
 Requires PHP: 5.2
 Stable tag: 1.0
 License: GPLv2 or later
@@ -29,9 +29,8 @@ Upon installation, the default setting will purge the cache upon each page refre
 This plugin will function on servers that have the Website Accelerator installed. If the acceleration module is not installed the module can still be installed and will not break any functionality of the website but will simply be useless.
 
 == Screenshots ==
-1. The screenshot description corresponds to screenshot-1.(png|jpg|jpeg|gif).
-2. The screenshot description corresponds to screenshot-2.(png|jpg|jpeg|gif).
-3. The screenshot description corresponds to screenshot-3.(png|jpg|jpeg|gif).
+1. Main interface.
+
 
 == Changelog ==
 = 1.0 =
