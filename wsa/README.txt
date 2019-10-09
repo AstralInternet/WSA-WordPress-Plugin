@@ -1,0 +1,38 @@
+=== Cache purge for Website Accelerator (WSA) by Astral Internet ===
+Contributors: @astralinternet, @neutrall, @Sleyeur
+Tags: cache, purge, wsa, website acceleration
+Requires at least: 3.5
+Tested up to: 5.2.2
+Requires PHP: 5.2
+Stable tag: 1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+On servers using the website accelerator by Astral Internet, the module offers the ability to automatically purge the cache when a page is modified.
+
+== Description ==
+The Website Accelerator by Astral Internet is a tool that allows you to place certain elements of a site in buffer
+memory (cache) inside the server. Once the elements are placed buffer of the server, they can be served much
+faster to people viewing a website.
+
+The website accelerator maximizes the Nginx caching feature while offering granular configuration for each site.
+More information concerning the WSA module is available on this blog “[No more slow websites!]( https://www.astralinternet.com/blog/en/no-more-slow-websites/)”.
+
+== Installation ==
+1. Upload the plugin files to the /wp-content/plugins/ directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the ‘Plugins’ screen in WordPress
+
+Upon installation, the default setting will purge the cache upon each page refresh. This cache be disactivated through the plugin interface in the tool’s menu.
+
+== Frequently Asked Questions ==
+= Will this plugin work for me =
+This plugin will function on servers that have the Website Accelerator installed. If the acceleration module is not installed the module can still be installed and will not break any functionality of the website but will simply be useless.
+
+== Screenshots ==
+1. The screenshot description corresponds to screenshot-1.(png|jpg|jpeg|gif).
+2. The screenshot description corresponds to screenshot-2.(png|jpg|jpeg|gif).
+3. The screenshot description corresponds to screenshot-3.(png|jpg|jpeg|gif).
+
+== Changelog ==
+= 1.0 =
+* First official version available.
