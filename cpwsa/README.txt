@@ -1,6 +1,6 @@
 === Cache purge for Website Accelerator ===
 Contributors: @astralinternet, @neutrall, @Sleyeur
-Tags: cache, purge, wsa, website acceleration
+Tags: cache, purge, wsa, cpwsa, website acceleration
 Requires at least: 3.5
 Tested up to: 5.2.3
 Requires PHP: 5.2

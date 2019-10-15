@@ -50,6 +50,8 @@
  *
  */
 
+namespace WSAHandler;
+
 class WSA
 {
 

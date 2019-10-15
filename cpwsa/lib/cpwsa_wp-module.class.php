@@ -28,13 +28,13 @@
 // If this file is called directly, abort.
 defined('ABSPATH') or die('No script kiddies please!');
 
-class WP_WSA
+class CPWSA_WP
 {
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the wsa_i18n class in order to set the domain and to register the hook
+	 * Uses the cpwsa_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -49,17 +49,17 @@ class WP_WSA
 		 * @since    1.0.0
 	 	 * @return void
 		 */
-		function wsa_load_plugin_textdomain()
+		function cpwsa_load_plugin_textdomain()
 		{
 			// Define the plugin path
 			$plugin_rel_path = dirname(dirname(plugin_basename(__FILE__))) . '/i18n';
 
 			// Set the language path for wordPress to find it.
-			load_plugin_textdomain('wsa', false, $plugin_rel_path);
+			load_plugin_textdomain('cpwsa', false, $plugin_rel_path);
 		}
 
 		// Add load the language files upon loading the module
-		add_action('plugins_loaded', 'wsa_load_plugin_textdomain');
+		add_action('plugins_loaded', 'cpwsa_load_plugin_textdomain');
 	}
 
 	/**
@@ -75,18 +75,17 @@ class WP_WSA
 		// Build top menu url with nonce protection
         $url = add_query_arg(
             [
-                'page' => 'wsa/lib/wsa_display.php',
-                'purge'   => 'vide_moi_tout',
-                'nonce'  => wp_create_nonce('wsa_purge-cache'),
+                'page' => 'cpwsa/lib/cpwsa_display.php',
+                'purge'   => 'empty_me',
+                'nonce'  => wp_create_nonce('cpwsa_purge-cache'),
             ],
-            admin_url()
+            admin_url()."admin.php"
         );
 
 		$wp_admin_bar->add_menu(array(
-			'id' => 'wsa-menu',
+			'id' => 'cpwsa-menu',
 			'parent' => false,
-			'title' => __("Vider la cache", "wsa"),
-			//'href' => admin_url('admin.php?page=wsa%2Flib%2Fwsa_display.php&purge=vide_moi_tout'),
+			'title' => __("Vider la cache", "cpwsa"),
 			'href' => esc_url($url),
 		));
 	}
@@ -97,13 +96,13 @@ class WP_WSA
 	 * @since    1.0.0
 	 * @return void
 	 */
-	public static function add_wsa_tools_menu()
+	public static function add_tools_menu()
 	{
 		add_management_page(
-			__('Module de cache', 'wsa'),
-			'Website Accelerator',
+			__('Module de cache', 'cpwsa'),
+			CPWSA_NAME,
 			'manage_options',
-			'wsa/lib/wsa_display.php',
+			'cpwsa/lib/cpwsa_display.php',
 			''
 		);
 	}
@@ -117,7 +116,7 @@ class WP_WSA
 	 */
 	public static function  add_settings_link($links)
 	{
-		array_unshift($links, '<a href="tools.php?page=wsa%2Flib%2Fwsa_display.php">Settings</a>');
+		array_unshift($links, '<a href="tools.php?page=cpwsa%2Flib%2Fwsa_display.php">Settings</a>');
 		return $links;
 	}
 
@@ -130,10 +129,10 @@ class WP_WSA
 	 */
 	public static function purge_hooks()
 	{
-		if (get_option('wsa_auto-purge') == "on") {
+		if (get_option('cpwsa_auto-purge') == "on") {
 			
 			//purge the user cache
-			WSA::purge_cache();
+			WSAHandler\WSA::purge_cache();
 		}
 	}
 
@@ -147,10 +146,10 @@ class WP_WSA
 	public static function activate()
 	{
 		// Check if the option already exist 
-		if (!get_option('wsa_auto-purge')) {
+		if (!get_option('cpwsa_auto-purge')) {
 
 			// Add the options with the default value
-			update_option('wsa_auto-purge', "on");
+			update_option('cpwsa_auto-purge', "on");
 		}
 	}
 
@@ -163,10 +162,10 @@ class WP_WSA
 	public static function uninstall()
 	{
 		// Check if the option already exist 
-		if (get_option('wsa_auto-purge')) {
+		if (get_option('cpwsa_auto-purge')) {
 
 			// remove the option we added in the db
-			delete_option('wsa_auto-purge', "on");
+			delete_option('cpwsa_auto-purge', "on");
 		}
 	}
 }
