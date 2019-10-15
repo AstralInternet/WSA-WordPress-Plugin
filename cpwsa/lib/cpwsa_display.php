@@ -35,7 +35,7 @@ defined('ABSPATH') or die('No script kiddies please!');
  *
  * @since 1.0.0
  */
-require_once dirname( CPWSA_FILE ) . '/vendor/wsa/wsa.class.php';
+ require_once dirname( CPWSA_FILE ) . '/vendor/wsa/wsa.class.php';
 
 // Update the "auto purge" setting in Wordpress
 if ( isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cpwsa_set-auto-purge') ) {
@@ -60,13 +60,13 @@ The styling has been place in the main display page to reduce the amount of item
 .cpwsa .clearcache_button {color: #fff; background-color: #ef6c45; position: relative; padding: 5px 15px; border: 0; border-radius: 2px;font-size: 20px}
 .cpwsa .clearcache_button:hover {background-color: #ec4e1f; cursor: pointer;}
 .cpwsa .clearcache_button img {height: 20px; margin-right: 10px;}
-.cpwsa .wsa_status_box, .wsa .white_box {background-color: #fff; border: 1px solid #ccc; padding: 15px;}
+.cpwsa .wsa_status_box, .cpwsa .white_box {background-color: #fff; border: 1px solid #ccc; padding: 15px;}
 .cpwsa .white_box {display: flex; flex-direction: column; align-items: center; margin: 20px 0;}
 .cpwsa .wsa_status_box p {font-weight: 600; padding: 15px; font-size: 18px; padding: 0; margin: 0;}
 .cpwsa .wsa_status_box p a {color: #caced1;text-decoration: none;}
 .cpwsa .wsa_status_box p a:hover {color: #989da1;}
 .cpwsa .exceptions {color: #989da1;padding: 10px; font-size: 12px;}
-.cpwsa .exceptions h3, .wsa .exceptions p, .wsa .exceptions ol {margin: 0;}
+.cpwsa .exceptions h3, .cpwsa .exceptions p, .cpwsa .exceptions ol {margin: 0;}
 .cpwsa .exceptions h4 {margin-bottom: 0;}
 .cpwsa .options_grp {width: 90%; text-align:left; padding:10px 0; align-items: baseline;}
 .cpwsa .options_grp .options_check {min-width: 50px; text-align: center;}
@@ -150,10 +150,10 @@ The styling has been place in the main display page to reduce the amount of item
         <div class="options_grp flex_base">
             <div class="options_check">
                 <label>
-                    <form method="post"><!-- todo check the path -->
+                    <form method="post">
                         <input type="hidden" name="hookForm" value="1">
                         <input type="hidden" name="nonce" value="<?=wp_create_nonce('cpwsa_set-auto-purge')?>">
-                        <input type="checkbox" name="wsa_save" onChange="submit();" <?=get_option('cpwsa_auto-purge') == "on" ? "checked" : "" ?>> 
+                        <input type="checkbox" name="cpwsa_save" onChange="submit();" <?=get_option('cpwsa_auto-purge') == "on" ? "checked" : "" ?>> 
                         <span class="checkmark"></span> 
                     </form>
                 </label>
