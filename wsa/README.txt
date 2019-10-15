@@ -1,4 +1,4 @@
-=== Cache purge for Website Accelerator (WSA) by Astral Internet ===
+=== Cache purge for Website Accelerator ===
 Contributors: @astralinternet, @neutrall, @Sleyeur
 Tags: cache, purge, wsa, website acceleration
 Requires at least: 3.5

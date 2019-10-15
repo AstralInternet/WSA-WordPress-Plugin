@@ -6,7 +6,7 @@
  *   \ \/\/ /\__ \/ _ \ 
  *    \_/\_/ |___/_/ \_\
  * 
- * Cache purge for Website Accelerator (WSA) by Astral Internet - Admin area display
+ * Cache purge for Website Accelerator - Admin area display
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
  * @version         1.0.0
@@ -38,7 +38,8 @@ defined('ABSPATH') or die('No script kiddies please!');
 require_once dirname( WSA_FILE ) . '/vendor/wsa/wsa.class.php';
 
 // Update the "auto purge" setting in Wordpress
-if (isset($_POST['hookForm'])) {
+if ( isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa_set-auto-purge') ) {
+
     update_option('wsa_auto-purge', isset($_POST['wsa_save']) ? "on" : "off");
 }
 
@@ -57,6 +58,7 @@ The styling has been place in the main display page to reduce the amount of item
 .wsa a:hover {color: #ec4e1f;}
 .wsa .flex_base {display:flex;justify-content:flex-start;align-items:center;}
 .wsa .clearcache_button {color: #fff; background-color: #ef6c45; position: relative; padding: 5px 15px; border: 0; border-radius: 2px;font-size: 20px}
+.wsa .clearcache_button:hover {background-color: #ec4e1f; cursor: pointer;}
 .wsa .clearcache_button img {height: 20px; margin-right: 10px;}
 .wsa .wsa_status_box, .wsa .white_box {background-color: #fff; border: 1px solid #ccc; padding: 15px;}
 .wsa .white_box {display: flex; flex-direction: column; align-items: center; margin: 20px 0;}
@@ -100,8 +102,7 @@ The styling has been place in the main display page to reduce the amount of item
 
     <?php
     // If a request was made to purge the cache, process to the cache purge ans display the success message.
-    if (isset($_REQUEST['purge'])) {
-        
+    if ( isset($_REQUEST['purge']) && isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], 'wsa_purge-cache') ) {
         WSA::purge_cache(); ?>
         <div id="wsa-message" style="display:flex;z-index:0;position:relative;flex-direction: column;">
             <div id="wsa-close" onClick="removeDiv()">&#x274E;</div>
@@ -122,8 +123,11 @@ The styling has been place in the main display page to reduce the amount of item
     <div class="white_box">
         <h2><?=__("Vider la mémoire cache", "wsa");?></h2>
         <p><?=__("Il est possible qu'après avoir modifié une page de votre site, le changement ne soit pas visible instantanément. Lorsque c’est le cas, cela signifie que le serveur possède toujours en mémoire l’ancienne version de votre site. Vider la cache forcera le serveur à récupérer une nouvelle version de votre site, à jour, ainsi votre modification sera visible pour tous.", "wsa");?></p>
-        <form method="post" action="<?php admin_url('partials/wsa_cache-admin-display.php') ?>">
+
+
+        <form method="post">
             <input type="hidden" name="purge" value="yes_please">
+            <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa_purge-cache')?>">
             <button class="flex_base clearcache_button">
                 <div><img src="<?=plugins_url( 'ressources/clear-single-user-cache-white.png', dirname(__FILE__) )?>"></div>
                 <div><?=__("Vider la cache", "wsa");?></div>
@@ -146,8 +150,9 @@ The styling has been place in the main display page to reduce the amount of item
         <div class="options_grp flex_base">
             <div class="options_check">
                 <label>
-                    <form method="post" action="<?php admin_url('wsa/lib/wsa_display.php') ?>"><!-- todo check the path -->
+                    <form method="post"><!-- todo check the path -->
                         <input type="hidden" name="hookForm" value="1">
+                        <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa_set-auto-purge')?>">
                         <input type="checkbox" name="wsa_save" onChange="submit();" <?=get_option('wsa_auto-purge') == "on" ? "checked" : "" ?>> 
                         <span class="checkmark"></span> 
                     </form>

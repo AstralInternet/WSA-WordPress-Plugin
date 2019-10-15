@@ -6,7 +6,7 @@
  *   \ \/\/ /\__ \/ _ \ 
  *    \_/\_/ |___/_/ \_\
  * 
- * Cache purge for Website Accelerator (WSA) by Astral Internet - Plugin class functions
+ * Cache purge for Website Accelerator - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
  * @version         1.0.0
@@ -71,11 +71,23 @@ class WP_WSA
 	public static function add_purge_top_admin_menu()
 	{
 		global $wp_admin_bar;
+
+		// Build top menu url with nonce protection
+        $url = add_query_arg(
+            [
+                'page' => 'wsa/lib/wsa_display.php',
+                'purge'   => 'vide_moi_tout',
+                'nonce'  => wp_create_nonce('wsa_purge-cache'),
+            ],
+            admin_url()
+        );
+
 		$wp_admin_bar->add_menu(array(
 			'id' => 'wsa-menu',
 			'parent' => false,
 			'title' => __("Vider la cache", "wsa"),
-			'href' => admin_url('admin.php?page=wsa%2Flib%2Fwsa_display.php&purge=vide_moi_tout'),
+			//'href' => admin_url('admin.php?page=wsa%2Flib%2Fwsa_display.php&purge=vide_moi_tout'),
+			'href' => esc_url($url),
 		));
 	}
 
