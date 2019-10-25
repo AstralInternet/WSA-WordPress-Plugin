@@ -33,5 +33,16 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.0.1 =
+* Hooked into popular existing cache plugin to clear server cache with those plugins
+  * W3 Total Cache
+  * Swift Performance
+  * WP Super Cache
+  * WP Fastest Cache
+  * LiteSpeed Cache
+  * Auto optimize
+* Added "before" and "after" hookable event when puring the server cache
+
 = 1.0 =
 * First official version available.

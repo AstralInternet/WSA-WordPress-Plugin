@@ -103,7 +103,7 @@ The styling has been place in the main display page to reduce the amount of item
     <?php
     // If a request was made to purge the cache, process to the cache purge ans display the success message.
     if ( isset($_REQUEST['purge']) && isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], 'cpwsa_purge-cache') ) {
-        WSAHandler\WSA::purge_cache(); ?>
+        CPWSA_WP::purge_cache(); ?>
         <div id="wsa-message" style="display:flex;z-index:0;position:relative;flex-direction: column;">
             <div id="wsa-close" onClick="removeDiv()">&#x274E;</div>
             <div id="wsa-progress"></div>

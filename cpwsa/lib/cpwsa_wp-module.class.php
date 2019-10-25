@@ -9,7 +9,7 @@
  * Cache purge for Website Accelerator - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.0
+ * @version         1.0.1
  * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -168,4 +168,148 @@ class CPWSA_WP
 			delete_option('cpwsa_auto-purge', "on");
 		}
 	}
+
+
+	/**
+	 * Function to purge the cache will WP hooks included
+	 * 
+	 * @since    1.0.1
+	 * @return void
+	 */
+	public static function purge_cache()
+	{
+
+		// Event hook before purging the cache
+		do_action('CPWSA_before_cache_purge') ;
+
+		// Call the purge cache function from the WSA class
+		WSAHandler\WSA::purge_cache();
+
+		// Event Hook after purging the cache
+		do_action('CPWSA_after_cache_purge') ;
+
+	}
+
+	/**
+	 * Hook itself into the other cache purge plugins
+	 * 
+	 * @since    1.0.1
+	 * @return void
+	 */
+	public static function Add_Cache_Plugins_Hooks()
+	{
+
+		// Add W3 Total Cache
+		self::add_W3_Total_Cache_Hooks();
+
+		// Add WP Super Cache
+		self::add_WP_Super_Cache_Hooks();
+
+		// Add WP fastest Cache
+		self::add_WP_Fastest_Cache_Hooks();
+
+		// Add Auto Optimize
+		self::add_Auto_Optimize_Hooks();
+
+		// Add Swidft Performance
+		self::add_Swift_Performance_Cache_Hooks();
+
+		// Add LiteSpeed
+		self::add_LiteSpeed_Cache_Hooks();
+	}
+
+
+
+	/**
+	 * Hook itself into W3 Total Cache extension
+	 * 
+	 * @since 1.0.1
+	 * @return void
+	 */
+	private static function add_W3_Total_Cache_Hooks() {
+
+		// On clear all cache
+		add_action( 'w3tc_flush_all', 'CPWSA_WP::purge_cache();' );
+
+		// On purge all post
+		add_action( 'w3tc_flush_posts', 'CPWSA_WP::purge_cache();' );
+
+		// On browser cache purge
+		add_action( 'w3tc_flush_after_browsercache', 'CPWSA_WP::purge_cache();' );
+
+		// On minify object cache purge
+		add_action( 'w3tc_flush_after_minify', 'CPWSA_WP::purge_cache();' );		
+
+		// After Object cache flush
+		add_action( 'w3tc_flush_after_objectcache', 'CPWSA_WP::purge_cache();' );	
+	}
+
+	/**
+	 * Hook itself into WP Super Cache
+	 * 
+	 * @since 1.0.1
+	 * @return void
+	 */
+	private static function add_WP_Super_Cache_Hooks() {
+
+		// On clear all cache
+		add_action( 'wp_cache_cleared', 'CPWSA_WP::purge_cache();' );
+	}
+
+	/**
+	 * Hook itself into WP Fastest Cache
+	 * 
+	 * @since 1.0.1
+	 * @return void
+	 */
+	private static function add_WP_Fastest_Cache_Hooks() {
+
+		// On clear cache
+		add_action( 'wpfc_delete_cache', 'CPWSA_WP::purge_cache();' );
+
+		// On clear all cache
+		add_action( 'wpfc_clear_all_cache', 'CPWSA_WP::purge_cache();' );	
+	}
+
+	/**
+	 * Hook itself into WP Fastest Cache
+	 * 
+	 * @since 1.0.1
+	 * @return void
+	 */
+	private static function add_Auto_Optimize_Hooks() {
+
+		// Clear page cache
+		add_action( 'autoptimize_action_cachepurged', 'CPWSA_WP::purge_cache();' );
+
+		// On clear all cache
+		add_action( 'cachify_flush_cache', 'CPWSA_WP::purge_cache();' );	
+	}
+
+	/**
+	 * Hook itself into Swift Performance
+	 * 
+	 * @since 1.0.1
+	 * @return void
+	 */
+	private static function add_Swift_Performance_Cache_Hooks() {
+
+		// On clear all cache
+		add_action( 'swift_performance_after_clear_all_cache', 'CPWSA_WP::purge_cache();' );	
+	}
+
+
+	/**
+	 * Hook itself into LiteSpeed
+	 * 
+	 * @since 1.0.1
+	 * @return void
+	 */
+	private static function add_LiteSpeed_Cache_Hooks() {
+
+		// On clear all cache
+		add_action( 'litespeed_cache_api_purge', 'CPWSA_WP::purge_cache();' );	
+	}
+
+
 }
