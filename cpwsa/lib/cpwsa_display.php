@@ -6,7 +6,7 @@
  *   \ \/\/ /\__ \/ _ \ 
  *    \_/\_/ |___/_/ \_\
  * 
- * Cache purge for Website Accelerator - Admin area display
+ * Website Accelerator Cache purge - Admin area display
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
  * @version         1.0.0
