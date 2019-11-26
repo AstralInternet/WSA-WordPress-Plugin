@@ -9,7 +9,7 @@
  * Website Accelerator Cache purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.1
+ * @version         1.0.2
  * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -75,7 +75,7 @@ class CPWSA_WP
 		// Build top menu url with nonce protection
         $url = add_query_arg(
             [
-                'page' => 'cpwsa/lib/cpwsa_display.php',
+                'page' => 'wsa-cachepurge/lib/cpwsa_display.php',
                 'purge'   => 'empty_me',
                 'nonce'  => wp_create_nonce('cpwsa_purge-cache'),
             ],
@@ -102,7 +102,7 @@ class CPWSA_WP
 			__('Module de cache', 'cpwsa'),
 			CPWSA_NAME,
 			'manage_options',
-			'cpwsa/lib/cpwsa_display.php',
+			'wsa-cachepurge/lib/cpwsa_display.php',
 			''
 		);
 	}
@@ -111,12 +111,13 @@ class CPWSA_WP
 	 * Function to add setting link to the plugins page.
 	 *
 	 * @since    1.0.0
+	 * @last_update 
 	 * @param array $links
 	 * @return array
 	 */
 	public static function  add_settings_link($links)
 	{
-		array_unshift($links, '<a href="tools.php?page=cpwsa%2Flib%2Fwsa_display.php">Settings</a>');
+		array_unshift($links, '<a href="tools.php?page=wsa-cachepurge%2Flib%2Fwsa_display.php">Settings</a>');
 		return $links;
 	}
 

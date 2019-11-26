@@ -2,21 +2,17 @@
 Contributors: @astralinternet, @neutrall, @Sleyeur
 Tags: cache, purge, wsa, cpwsa, website acceleration
 Requires at least: 3.5
-Tested up to: 5.2.3
+Tested up to: 5.3
 Requires PHP: 5.2
-Stable tag: 1.0
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 On servers using the website accelerator by Astral Internet, the module offers the ability to automatically purge the cache when a page is modified.
 
 == Description ==
-The Website Accelerator by Astral Internet is a tool that allows you to place certain elements of a site in buffer
-memory (cache) inside the server. Once the elements are placed buffer of the server, they can be served much
-faster to people viewing a website.
-
-The website accelerator maximizes the Nginx caching feature while offering granular configuration for each site.
-More information concerning the WSA module is available on this blog “[No more slow websites!]( https://www.astralinternet.com/blog/en/no-more-slow-websites/)”.
+The Website Accelerator by Astral Internet is a tool that allows you to place certain elements of a site in buffer memory (cache) inside the server. Once the elements are placed buffer of the server, they can be served much faster to people viewing a website.
+The website accelerator maximizes the Nginx caching feature while offering granular configuration for each site. More information concerning the WSA module is available on this blog “[No more slow websites!]( https://www.astralinternet.com/blog/en/no-more-slow-websites/)”.
 
 == Installation ==
 1. Upload the plugin files to the /wp-content/plugins/ directory, or install the plugin through the WordPress plugins screen directly.
@@ -33,6 +29,9 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.0.2 =
+* Fixed menu links to match the slugh change from the official WordPress repo.
 
 = 1.0.1 =
 * Hooked into popular existing cache plugin to clear server cache with those plugins
