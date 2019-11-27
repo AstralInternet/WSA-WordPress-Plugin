@@ -279,7 +279,7 @@ class WSA
          * underscore ([a-zA-Z0-9_]).
          */
         preg_match(
-            '/\/([a-zA-Z0-9_]{1,})\/([a-zA-Z09_]{1,})\//',
+            '/\/([a-zA-Z0-9_]{1,})\/([a-zA-Z0-9_]{1,})\//',
             __DIR__,
             $splittedFolders
         );
