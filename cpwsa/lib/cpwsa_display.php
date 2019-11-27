@@ -171,6 +171,6 @@ var popupMessageSize = popupBloc.offsetWidth - 4;
 popupMessage.style.borderRightWidth = popupMessageSize + "px";
 
 function removeDiv(){
-    $('#wsa-message').remove();
+    jQuery('#wsa-message').remove();
 }
 </script>

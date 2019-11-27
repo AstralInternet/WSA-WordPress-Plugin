@@ -33,6 +33,7 @@ This plugin will function on servers that have the Website Accelerator installed
 = 1.0.2 =
 * Fixed menu links to match the slugh change from the official WordPress repo.
 * Fixed path regex in wsa main class
+* Fixed jQuery call in interface.
 
 = 1.0.1 =
 * Hooked into popular existing cache plugin to clear server cache with those plugins
