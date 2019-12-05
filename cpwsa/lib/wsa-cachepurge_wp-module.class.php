@@ -137,7 +137,22 @@ class WSA_Cachepurge_WP
 	 */
 	public static function purge_hooks()
 	{
-		if (get_option('cpwsa_auto-purge') == "on") {
+
+		// Update the option value in the DB
+		if (get_option('cpwsa_auto-purge')) {
+
+			// Get previous option
+			$autoPurge = get_option('cpwsa_auto-purge');
+
+			// Set new option
+			update_option('wsa-cachepurge_auto-purge', $autoPurge);
+
+			// Remove previous option
+			delete_option('cpwsa_auto-purge', "on");
+		}
+
+		// Purge only if the auto purge is enable
+		if (get_option('wsa-cachepurge_auto-purge') == "on") {
 
 			//purge the user cache
 			WSAHandler\WSA::purge_cache();
@@ -154,10 +169,24 @@ class WSA_Cachepurge_WP
 	public static function activate()
 	{
 		// Check if the option already exist 
-		if (!get_option('cpwsa_auto-purge')) {
+		if (!get_option('wsa-cachepurge_auto-purge')) {
 
-			// Add the options with the default value
-			update_option('cpwsa_auto-purge', "on");
+			// Check if the version was set from a previous version
+			if (!get_option('cpwsa_auto-purge')) {
+
+				// Add the options with the default value
+				update_option('wsa-cachepurge_auto-purge', "on");
+			} else {
+
+				// Get previous option
+				$autoPurge = get_option('cpwsa_auto-purge');
+
+				// Set new option
+				update_option('wsa-cachepurge_auto-purge', $autoPurge);
+
+				// Remove previous option
+				delete_option('cpwsa_auto-purge', "on");
+			}
 		}
 	}
 
@@ -175,6 +204,13 @@ class WSA_Cachepurge_WP
 
 			// remove the option we added in the db
 			delete_option('cpwsa_auto-purge', "on");
+		}
+
+		// Check if the option already exist 
+		if (get_option('wsa-cachepurge_auto-purge')) {
+
+			// remove the option we added in the db
+			delete_option('wsa-cachepurge_auto-purge', "on");
 		}
 	}
 

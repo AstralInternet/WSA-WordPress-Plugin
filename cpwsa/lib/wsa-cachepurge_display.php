@@ -40,7 +40,7 @@ defined('ABSPATH') or die('No script kiddies please!');
 // Update the "auto purge" setting in Wordpress
 if ( isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_set-auto-purge') ) {
 
-    update_option('cpwsa_auto-purge', isset($_POST['wsa-cachepurge_save']) ? "on" : "off");
+    update_option('wsa-cachepurge_auto-purge', isset($_POST['wsa-cachepurge-cachepurge_save']) ? "on" : "off");
 }
 
 ?>
@@ -153,7 +153,7 @@ The styling has been place in the main display page to reduce the amount of item
                     <form method="post">
                         <input type="hidden" name="hookForm" value="1">
                         <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge_set-auto-purge')?>">
-                        <input type="checkbox" name="wsa-cachepurge_save" onChange="submit();" <?=get_option('cpwsa_auto-purge') == "on" ? "checked" : "" ?>> 
+                        <input type="checkbox" name="wsa-cachepurge-cachepurge_save" onChange="submit();" <?=get_option('wsa-cachepurge_auto-purge') == "on" ? "checked" : "" ?>> 
                         <span class="checkmark"></span> 
                     </form>
                 </label>
