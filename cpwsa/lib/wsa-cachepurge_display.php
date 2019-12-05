@@ -9,7 +9,7 @@
  * Website Accelerator Cache purge - Admin area display
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.0
+ * @version         1.0.3
  * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
