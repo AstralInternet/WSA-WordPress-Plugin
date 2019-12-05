@@ -16,7 +16,7 @@
  *                  Public License, version 3 or higher
  * @link            https://github.com/AstralInternet/WSA-Website-Acceleration-PHP-class
  * 
- * WSA : The Website Accelerator by Astral Internet is a tool that allows you 
+ * WSA-Cachepurge : The Website Accelerator by Astral Internet is a tool that allows you 
  * to place certain elements of a site in buffer memory (cache) inside the 
  * server. Once the elements are placed buffer of the server, they can be 
  * served much faster to people viewing a website.

@@ -14,28 +14,28 @@
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
  * 
- * WSA : The Astral Internet Website Accelerator is a tool that allows you to place 
- * certain elements of a site in buffer memory (cache) inside the server. Once the 
- * elements are placed buffer of the server, they can be served much faster to people
- * viewing a website.
+ * WSA-Cachepurge : The Astral Internet Website Accelerator is a tool that 
+ * allows you to place certain elements of a site in buffer memory (cache) 
+ * inside the server. Once the elements are placed buffer of the server, they 
+ * can be served much faster to peopleviewing a website.
  * 
- * Class to handle most actions required by Wordpress. This class oversees loading 
- * the internationalization settings, registering the menus, action to take upon 
- * activation/uninstall and setting the actions hooks.
+ * Class to handle most actions required by Wordpress. This class oversees 
+ * loading the internationalization settings, registering the menus, action to
+ * take upon activation/uninstall and setting the actions hooks.
  *
  */
 
 // If this file is called directly, abort.
 defined('ABSPATH') or die('No script kiddies please!');
 
-class CPWSA_WP
+class WSA_Cachepurge_WP
 {
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the cpwsa_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
+	 * Uses the WSA_Cachepurge_i18n class in order to set the domain and to register the
+	 * hook with WordPress.
 	 *
 	 * @since    1.0.0
 	 * @return void
@@ -44,26 +44,29 @@ class CPWSA_WP
 	{
 
 		/**
-		 *  sub-function that will load the language (i18n) file into the wordpress admin area
+		 * sub-function that will load the language (i18n) file into the 
+		 * wordpress admin area
 		 * 
 		 * @since    1.0.0
-	 	 * @return void
+		 * @return void
 		 */
-		function cpwsa_load_plugin_textdomain()
+		function wsa_cachepurge_load_plugin_textdomain()
 		{
 			// Define the plugin path
-			$plugin_rel_path = dirname(dirname(plugin_basename(__FILE__))) . '/i18n';
+			$plugin_rel_path = dirname(dirname(plugin_basename(__FILE__))) .
+				'/i18n';
 
 			// Set the language path for wordPress to find it.
-			load_plugin_textdomain('cpwsa', false, $plugin_rel_path);
+			load_plugin_textdomain('wsa-cachepurge', false, $plugin_rel_path);
 		}
 
 		// Add load the language files upon loading the module
-		add_action('plugins_loaded', 'cpwsa_load_plugin_textdomain');
+		add_action('plugins_loaded', 'wsa_cachepurge_load_plugin_textdomain');
 	}
 
 	/**
-	 * function to register the an "Empty Cache" option in the top admin area menu.
+	 * function to register the an "Empty Cache" option in the top admin area 
+	 * menu.
 	 * 
 	 * @since    1.0.0
 	 * @return void
@@ -73,25 +76,26 @@ class CPWSA_WP
 		global $wp_admin_bar;
 
 		// Build top menu url with nonce protection
-        $url = add_query_arg(
-            [
-                'page' => 'wsa-cachepurge/lib/cpwsa_display.php',
-                'purge'   => 'empty_me',
-                'nonce'  => wp_create_nonce('cpwsa_purge-cache'),
-            ],
-            admin_url()."admin.php"
-        );
+		$url = add_query_arg(
+			[
+				'page' => 'wsa-cachepurge/lib/wsa-cachepurge_display.php',
+				'purge'   => 'empty_me',
+				'nonce'  => wp_create_nonce('wsa-cachepurge_purge-cache'),
+			],
+			admin_url() . "admin.php"
+		);
 
 		$wp_admin_bar->add_menu(array(
-			'id' => 'cpwsa-menu',
+			'id' => 'wsa-cachepurge-menu',
 			'parent' => false,
-			'title' => __("Vider la cache", "cpwsa"),
+			'title' => __("Vider la cache", "wsa-cachepurge"),
 			'href' => esc_url($url),
 		));
 	}
 
 	/**
-	 * Function to register the an the plugin page in the tools menu of wordpress.
+	 * Function to register the an the plugin page in the tools menu of 
+	 * wordpress.
 	 * 
 	 * @since    1.0.0
 	 * @return void
@@ -99,10 +103,10 @@ class CPWSA_WP
 	public static function add_tools_menu()
 	{
 		add_management_page(
-			__('Module de cache', 'cpwsa'),
-			CPWSA_NAME,
+			__('Module de cache', 'wsa-cachepurge'),
+			WSA_CACHEPURGE_NAME,
 			'manage_options',
-			'wsa-cachepurge/lib/cpwsa_display.php',
+			'wsa-cachepurge/lib/wsa-cachepurge_display.php',
 			''
 		);
 	}
@@ -117,7 +121,10 @@ class CPWSA_WP
 	 */
 	public static function  add_settings_link($links)
 	{
-		array_unshift($links, '<a href="tools.php?page=wsa-cachepurge%2Flib%2Fwsa_display.php">Settings</a>');
+		$linkToAdd = '<a href="tools.php?' .
+			'page=wsa-cachepurge%2Flib%2Fwsa_display.php">Settings</a>';
+
+		array_unshift($links, $linkToAdd);
 		return $links;
 	}
 
@@ -131,7 +138,7 @@ class CPWSA_WP
 	public static function purge_hooks()
 	{
 		if (get_option('cpwsa_auto-purge') == "on") {
-			
+
 			//purge the user cache
 			WSAHandler\WSA::purge_cache();
 		}
@@ -155,7 +162,8 @@ class CPWSA_WP
 	}
 
 	/**
-	 * Remove the options added by the plugin from the option table in the database.
+	 * Remove the options added by the plugin from the option table in the 
+	 * database.
 	 * 
 	 * @since    1.0.0
 	 * @return void
@@ -181,14 +189,13 @@ class CPWSA_WP
 	{
 
 		// Event hook before purging the cache
-		do_action('CPWSA_before_cache_purge') ;
+		do_action('wsa-cachepurge_before_cache_purge');
 
 		// Call the purge cache function from the WSA class
 		WSAHandler\WSA::purge_cache();
 
 		// Event Hook after purging the cache
-		do_action('CPWSA_after_cache_purge') ;
-
+		do_action('wsa-cachepurge_after_cache_purge');
 	}
 
 	/**
@@ -227,22 +234,38 @@ class CPWSA_WP
 	 * @since 1.0.1
 	 * @return void
 	 */
-	private static function add_W3_Total_Cache_Hooks() {
+	private static function add_W3_Total_Cache_Hooks()
+	{
 
 		// On clear all cache
-		add_action( 'w3tc_flush_all', 'CPWSA_WP::purge_cache();' );
+		add_action(
+			'w3tc_flush_all',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 
 		// On purge all post
-		add_action( 'w3tc_flush_posts', 'CPWSA_WP::purge_cache();' );
+		add_action(
+			'w3tc_flush_posts',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 
 		// On browser cache purge
-		add_action( 'w3tc_flush_after_browsercache', 'CPWSA_WP::purge_cache();' );
+		add_action(
+			'w3tc_flush_after_browsercache',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 
 		// On minify object cache purge
-		add_action( 'w3tc_flush_after_minify', 'CPWSA_WP::purge_cache();' );		
+		add_action(
+			'w3tc_flush_after_minify',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 
 		// After Object cache flush
-		add_action( 'w3tc_flush_after_objectcache', 'CPWSA_WP::purge_cache();' );	
+		add_action(
+			'w3tc_flush_after_objectcache',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 	}
 
 	/**
@@ -251,10 +274,11 @@ class CPWSA_WP
 	 * @since 1.0.1
 	 * @return void
 	 */
-	private static function add_WP_Super_Cache_Hooks() {
+	private static function add_WP_Super_Cache_Hooks()
+	{
 
 		// On clear all cache
-		add_action( 'wp_cache_cleared', 'CPWSA_WP::purge_cache();' );
+		add_action('wp_cache_cleared', 'WSA_Cachepurge_WP::purge_cache();');
 	}
 
 	/**
@@ -263,13 +287,14 @@ class CPWSA_WP
 	 * @since 1.0.1
 	 * @return void
 	 */
-	private static function add_WP_Fastest_Cache_Hooks() {
+	private static function add_WP_Fastest_Cache_Hooks()
+	{
 
 		// On clear cache
-		add_action( 'wpfc_delete_cache', 'CPWSA_WP::purge_cache();' );
+		add_action('wpfc_delete_cache', 'WSA_Cachepurge_WP::purge_cache();');
 
 		// On clear all cache
-		add_action( 'wpfc_clear_all_cache', 'CPWSA_WP::purge_cache();' );	
+		add_action('wpfc_clear_all_cache', 'WSA_Cachepurge_WP::purge_cache();');
 	}
 
 	/**
@@ -278,13 +303,17 @@ class CPWSA_WP
 	 * @since 1.0.1
 	 * @return void
 	 */
-	private static function add_Auto_Optimize_Hooks() {
+	private static function add_Auto_Optimize_Hooks()
+	{
 
 		// Clear page cache
-		add_action( 'autoptimize_action_cachepurged', 'CPWSA_WP::purge_cache();' );
+		add_action(
+			'autoptimize_action_cachepurged',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 
 		// On clear all cache
-		add_action( 'cachify_flush_cache', 'CPWSA_WP::purge_cache();' );	
+		add_action('cachify_flush_cache', 'WSA_Cachepurge_WP::purge_cache();');
 	}
 
 	/**
@@ -293,10 +322,14 @@ class CPWSA_WP
 	 * @since 1.0.1
 	 * @return void
 	 */
-	private static function add_Swift_Performance_Cache_Hooks() {
+	private static function add_Swift_Performance_Cache_Hooks()
+	{
 
 		// On clear all cache
-		add_action( 'swift_performance_after_clear_all_cache', 'CPWSA_WP::purge_cache();' );	
+		add_action(
+			'swift_performance_after_clear_all_cache',
+			'WSA_Cachepurge_WP::purge_cache();'
+		);
 	}
 
 
@@ -306,11 +339,10 @@ class CPWSA_WP
 	 * @since 1.0.1
 	 * @return void
 	 */
-	private static function add_LiteSpeed_Cache_Hooks() {
+	private static function add_LiteSpeed_Cache_Hooks()
+	{
 
 		// On clear all cache
-		add_action( 'litespeed_cache_api_purge', 'CPWSA_WP::purge_cache();' );	
+		add_action('litespeed_cache_api_purge', 'WSA_Cachepurge_WP::purge_cache();');
 	}
-
-
 }

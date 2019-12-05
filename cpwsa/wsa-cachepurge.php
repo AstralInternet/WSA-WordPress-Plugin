@@ -16,14 +16,14 @@
  * Author URI:			https://www.astralinternet.com/fr
  * License:				GPL v3
  * License URI:			http://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: 		cpwsa
+ * Text Domain: 		wsa-cachepurge
  * Domain Path:     	/i18n
  * Requires at least:	3.5.0
  * Requires PHP:		5.3
  *
- * CPWSA : The Astral Internet Website Accelerator is a tool that allows you to place 
+ * wsa-cachepurge : The Astral Internet Website Accelerator is a tool that allows you to place 
  * certain elements of a site in buffer memory (cache) inside the server. Once the 
- * elements are placed buffer of the server, they can be served much faster to people
+ * elements are placed buffer of the server, they can be served much faster to people 
  * viewing a website.
  * 
  * This module offers the ability to automatically purge the server cache when a page 
@@ -34,8 +34,8 @@
 
 // Header Translation
 
-__("Cette extension est conçue pour être utilisée sur un serveur exécutant le module d'accélération de site web créé par Astral Internet. Celle-ci sert à vider automatiquement la mémoire cache du serveur lorsqu'une page ou un article est modifié.", "cpwsa");
-__("https://www.astralinternet.com/fr", "cpwsa");
+__("Cette extension est conçue pour être utilisée sur un serveur exécutant le module d'accélération de site web créé par Astral Internet. Celle-ci sert à vider automatiquement la mémoire cache du serveur lorsqu'une page ou un article est modifié.", "wsa-cachepurge");
+__("https://www.astralinternet.com/fr", "wsa-cachepurge");
 
 // If this file is called directly, abort.
 defined('ABSPATH') or die('No script kiddies please!');
@@ -45,30 +45,30 @@ defined('ABSPATH') or die('No script kiddies please!');
  *
  * @since 1.0.0
  */
-define('CPWSA_VERSION', '1.0.0');
+define('WSA_CACHEPURGE_VERSION', '1.0.0');
 
 /**
  * Store the plugin name.
  *
  * @since 1.0.0
  */
-define('CPWSA_NAME', 'Website Accelerator Cache purge');
+define('WSA_CACHEPURGE_NAME', 'Website Accelerator Cache purge');
 
 /**
  * Declare the main plugin file, if not alreay declared
  *
  * @since 1.0.0
  */
-if (!defined('CPWSA_FILE')) {
-    define('CPWSA_FILE', __FILE__);
+if (!defined('WSA_CACHEPURGE_FILE')) {
+    define('WSA_CACHEPURGE_FILE', __FILE__);
 }
 
 /**
- * Include the core plugin class CPWSA_WP
+ * Include the core plugin class WSA_Cachepurge_WP
  *
  * @since 1.0.0
  */
-require_once plugin_dir_path(__FILE__) . 'lib/cpwsa_wp-module.class.php';
+require_once plugin_dir_path(__FILE__) . 'lib/wsa-cachepurge_wp-module.class.php';
 
 /**
  * Include the public WSA class
@@ -78,28 +78,28 @@ require_once plugin_dir_path(__FILE__) . 'lib/cpwsa_wp-module.class.php';
 require_once plugin_dir_path(__FILE__) . "vendor/wsa/wsa.class.php";
 
 // Set module local setting
-CPWSA_WP::set_locale();
+WSA_Cachepurge_WP::set_locale();
 
 // Register the activation hook
-register_activation_hook(__FILE__, 'CPWSA_WP::activate');
+register_activation_hook(__FILE__, 'WSA_Cachepurge_WP::activate');
 
 // Register the uninstall hook
-register_uninstall_hook(__FILE__, 'CPWSA_WP::uninstall');
+register_uninstall_hook(__FILE__, 'WSA_Cachepurge_WP::uninstall');
 
 // Register admin area top "Empty Cache" menu.
-add_action('wp_before_admin_bar_render', 'CPWSA_WP::add_purge_top_admin_menu');
+add_action('wp_before_admin_bar_render', 'WSA_Cachepurge_WP::add_purge_top_admin_menu');
 
 // Register admin area top "Empty Cache" menu.
-add_action('admin_menu', 'CPWSA_WP::add_tools_menu');
+add_action('admin_menu', 'WSA_Cachepurge_WP::add_tools_menu');
 
 // Register the hook on page preview
-add_action('customize_preview_init', 'CPWSA_WP::purge_hooks');
+add_action('customize_preview_init', 'WSA_Cachepurge_WP::purge_hooks');
 
 // Register the hook on page updates and on new pages
-add_action('save_post', 'CPWSA_WP::purge_hooks');
+add_action('save_post', 'WSA_Cachepurge_WP::purge_hooks');
 
 // Add the link for the plugin settings
-add_filter('plugin_action_links_wsa/cpwsa.php', 'CPWSA_WP::add_settings_link');
+add_filter('plugin_action_links_wsa/wsa-cachepurge.php', 'WSA_Cachepurge_WP::add_settings_link');
 
 /**
  * Hook into other Cache plugin to clear server cache at the same time
@@ -107,4 +107,4 @@ add_filter('plugin_action_links_wsa/cpwsa.php', 'CPWSA_WP::add_settings_link');
  * 
  * @since 1.0.1
  */
-CPWSA_WP::Add_Cache_Plugins_Hooks();
+WSA_Cachepurge_WP::Add_Cache_Plugins_Hooks();
