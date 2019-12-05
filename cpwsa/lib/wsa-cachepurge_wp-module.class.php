@@ -119,10 +119,11 @@ class WSA_Cachepurge_WP
 	 * @param array $links
 	 * @return array
 	 */
-	public static function  add_settings_link($links)
+	public static function add_settings_link($links)
 	{
 		$linkToAdd = '<a href="tools.php?' .
-			'page=wsa-cachepurge%2Flib%2Fwsa_display.php">Settings</a>';
+			'page=wsa-cachepurge/lib/wsa-cachepurge_display.php">' .
+			__("Réglages", "wsa-cachepurge") . '</a>';
 
 		array_unshift($links, $linkToAdd);
 		return $links;

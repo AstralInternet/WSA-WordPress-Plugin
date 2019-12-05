@@ -99,7 +99,7 @@ add_action('customize_preview_init', 'WSA_Cachepurge_WP::purge_hooks');
 add_action('save_post', 'WSA_Cachepurge_WP::purge_hooks');
 
 // Add the link for the plugin settings
-add_filter('plugin_action_links_wsa/wsa-cachepurge.php', 'WSA_Cachepurge_WP::add_settings_link');
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'WSA_Cachepurge_WP::add_settings_link');
 
 /**
  * Hook into other Cache plugin to clear server cache at the same time

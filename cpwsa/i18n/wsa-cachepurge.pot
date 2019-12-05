@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wsa-cachepurge\n"
-"POT-Creation-Date: 2019-12-05 10:37-0500\n"
+"POT-Creation-Date: 2019-12-05 11:23-0500\n"
 "PO-Revision-Date: 2019-07-30 16:41-0400\n"
 "Last-Translator: \n"
 "Language-Team: Astral 360\n"
@@ -129,6 +129,10 @@ msgstr ""
 
 #: lib/wsa-cachepurge_wp-module.class.php:106
 msgid "Module de cache"
+msgstr ""
+
+#: lib/wsa-cachepurge_wp-module.class.php:126
+msgid "Réglages"
 msgstr ""
 
 #: wsa-cachepurge.php:37
