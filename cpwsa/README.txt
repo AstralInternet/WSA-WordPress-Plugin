@@ -31,7 +31,7 @@ This plugin will function on servers that have the Website Accelerator installed
 == Changelog ==
 
 = 1.0.5 =
-* Fix string match when checking if the module is available on the server.
+* Fixed string match when checking if the module is available on the server.
 
 = 1.0.4 =
 * Fixed array declaration in PHP 5.3.
