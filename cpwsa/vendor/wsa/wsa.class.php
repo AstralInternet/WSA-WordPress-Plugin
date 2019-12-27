@@ -199,7 +199,7 @@ class WSA
          * Check if the module Powered-By string is present in the file header.
          * No need for '===' since the Powered-By will never by at position 0.
          */
-        if (strpos($pageHeader, 'Nginx for cPanel/WHM by AstralInternet')) {
+        if (strpos($pageHeader, 'Nginx for WHM/cPanel by Astral Internet')) {
             $moduleActivated = true;
         }
 
