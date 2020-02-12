@@ -219,10 +219,13 @@ class WSA
      */
     private static function get_page_header($p_pageUrl)
     {
+        // Create UserAgent for curl
+        $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
 
         // Create curl request to fetch the page header
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $p_pageUrl);
+        curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_NOBODY, 1);
