@@ -1,10 +1,10 @@
-=== Cache purge for Website Accelerator ===
+=== Cache Purge for Website Accelerator ===
 Contributors: @astralinternet, @neutrall, @sleyeur
 Tags: cache, purge, wsa, cpwsa, wsa-cachepurge, website acceleration
 Requires at least: 3.5
 Tested up to: 5.3.1
 Requires PHP: 5.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,9 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.0.6 =
+* Fixed CloudFlare bocking curl request when using no UserAgent.
 
 = 1.0.5 =
 * Fixed string match when checking if the module is available on the server.
