@@ -31,7 +31,7 @@ This plugin will function on servers that have the Website Accelerator installed
 == Changelog ==
 
 = 1.0.6 =
-* Fixed CloudFlare bocking curl request when using no UserAgent.
+* Fixed CloudFlare blocking curl request when using no UserAgent.
 
 = 1.0.5 =
 * Fixed string match when checking if the module is available on the server.
