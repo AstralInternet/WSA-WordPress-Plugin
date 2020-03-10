@@ -96,7 +96,7 @@ The styling has been place in the main display page to reduce the amount of item
         </div> <!-- END status box -->
     </div>
 
-    <p><?=__("L’accélérateur de site web d’<a href=\"https://www.astralinternet.con/fr\">Astral Internet</a> est un outil qui permet de placer certains éléments d’un site Web dans une mémoire tampon (cache) à l’intérieur du serveur. Une fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront servis beaucoup plus rapidement aux visiteurs visionnant votre site.", "wsa-cachepurge");?></p>
+    <p><?=__("L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/fr\">Astral Internet</a> est un outil qui permet de placer certains éléments d’un site Web dans une mémoire tampon (cache) à l’intérieur du serveur. Une fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront servis beaucoup plus rapidement aux visiteurs visionnant votre site.", "wsa-cachepurge");?></p>
     <p><?=__("Pour plus d'information concernant ce module, veuillez lire l’article suivant « <a href=\"https://www.astralinternet.com/blog/fr/fini-les-sites-web-trop-lents/\">Fini les sites web trop lents!</a> ».", "wsa-cachepurge");?></p>
     <p><?=__("La documentation complète du module est également disponible <a href=\"https://docs.astral360.com/\">ici</a>.", "wsa-cachepurge");?></p>
 

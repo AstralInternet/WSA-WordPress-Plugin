@@ -39,7 +39,7 @@ msgstr ""
 
 #: lib/wsa-cachepurge_display.php:99
 msgid ""
-"L’accélérateur de site web d’<a href=\"https://www.astralinternet.con/fr"
+"L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/fr"
 "\">Astral Internet</a> est un outil qui permet de placer certains éléments "
 "d’un site Web dans une mémoire tampon (cache) à l’intérieur du serveur. Une "
 "fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront "
