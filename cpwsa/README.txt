@@ -2,9 +2,9 @@
 Contributors: @astralinternet, @neutrall, @sleyeur
 Tags: cache, purge, wsa, cpwsa, wsa-cachepurge, website acceleration
 Requires at least: 3.5
-Tested up to: 5.4
+Tested up to: 5.4.2
 Requires PHP: 5.3
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,9 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.0.7 =
+* Removed Swift Performance intergration since it is now included directly in Swift Performance.
 
 = 1.0.6 =
 * Fixed CloudFlare blocking curl request when using no UserAgent.
