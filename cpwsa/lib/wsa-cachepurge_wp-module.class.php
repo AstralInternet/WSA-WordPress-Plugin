@@ -256,9 +256,6 @@ class WSA_Cachepurge_WP
 		// Add Auto Optimize
 		self::add_Auto_Optimize_Hooks();
 
-		// Add Swidft Performance
-		self::add_Swift_Performance_Cache_Hooks();
-
 		// Add LiteSpeed
 		self::add_LiteSpeed_Cache_Hooks();
 	}
@@ -352,23 +349,6 @@ class WSA_Cachepurge_WP
 		// On clear all cache
 		add_action('cachify_flush_cache', 'WSA_Cachepurge_WP::purge_cache();');
 	}
-
-	/**
-	 * Hook itself into Swift Performance
-	 * 
-	 * @since 1.0.1
-	 * @return void
-	 */
-	private static function add_Swift_Performance_Cache_Hooks()
-	{
-
-		// On clear all cache
-		add_action(
-			'swift_performance_after_clear_all_cache',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
-	}
-
 
 	/**
 	 * Hook itself into LiteSpeed
