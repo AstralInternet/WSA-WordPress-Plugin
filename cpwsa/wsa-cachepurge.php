@@ -11,7 +11,7 @@
  * Plugin Name: 		Website Accelerator Cache Purge
  * Plugin URI:      	https://github.com/AstralInternet/WSA-WordPress-Plugin
  * Description:			This extension is designed to be used on a server running the website acceleration module created by Astral Internet. The plugin will automatically purge the server cache when a page or article is updated.
- * Version:         	1.0.7
+ * Version:         	1.0.8
  * Author:				Astral Internet inc.
  * Author URI:			https://www.astralinternet.com/fr
  * License:				GPL v3
@@ -34,6 +34,8 @@
 
 // Header Translation
 
+namespace WSAHandler;
+
 __("Cette extension est conçue pour être utilisée sur un serveur exécutant le module d'accélération de site web créé par Astral Internet. Celle-ci sert à vider automatiquement la mémoire cache du serveur lorsqu'une page ou un article est modifié.", "wsa-cachepurge");
 __("https://www.astralinternet.com/fr", "wsa-cachepurge");
 
@@ -45,7 +47,7 @@ defined('ABSPATH') or die('No script kiddies please!');
  *
  * @since 1.0.0
  */
-define('WSA_CACHEPURGE_VERSION', '1.0.7');
+define('WSA_CACHEPURGE_VERSION', '1.0.8');
 
 /**
  * Store the plugin name.
