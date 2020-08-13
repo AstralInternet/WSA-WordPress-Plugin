@@ -2,7 +2,7 @@
 Contributors: @astralinternet, @neutrall, @sleyeur
 Tags: cache, purge, wsa, cpwsa, wsa-cachepurge, website acceleration
 Requires at least: 3.5
-Tested up to: 5.4.2
+Tested up to: 5.5
 Requires PHP: 5.3
 Stable tag: 1.0.7
 License: GPLv2 or later
