@@ -34,8 +34,6 @@
 
 // Header Translation
 
-namespace WSAHandler;
-
 __("Cette extension est conçue pour être utilisée sur un serveur exécutant le module d'accélération de site web créé par Astral Internet. Celle-ci sert à vider automatiquement la mémoire cache du serveur lorsqu'une page ou un article est modifié.", "wsa-cachepurge");
 __("https://www.astralinternet.com/fr", "wsa-cachepurge");
 

@@ -27,8 +27,6 @@
  * 
  */
 
-namespace WSAHandler;
-
  // If this file is called directly, abort.
 defined('ABSPATH') or die('No script kiddies please!');
 
