@@ -6,7 +6,7 @@
  *   \ \/\/ /\__ \/ _ \ 
  *    \_/\_/ |___/_/ \_\
  * 
- * Website Accelerator Cache Purge - Admin area display
+ * WSA - Website Accelerator Cache Purge - Admin area display
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
  * @version         1.0.8

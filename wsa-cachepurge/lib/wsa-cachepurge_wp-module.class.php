@@ -6,7 +6,7 @@
  *   \ \/\/ /\__ \/ _ \ 
  *    \_/\_/ |___/_/ \_\
  * 
- * Website Accelerator Cache Purge - Plugin class functions
+ * WSA - Website Accelerator Cache Purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
  * @version         1.0.8

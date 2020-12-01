@@ -30,6 +30,9 @@ This plugin will function on servers that have the Website Accelerator installed
 
 == Changelog ==
 
+= 1.0.9 =
+* New name for the plugin.
+
 = 1.0.8 =
 
 * Add new namespace on class.
