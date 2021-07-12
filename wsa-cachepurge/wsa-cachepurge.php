@@ -19,7 +19,7 @@
  * Text Domain: 		wsa-cachepurge
  * Domain Path:     	/i18n
  * Requires at least:	3.5.0
- * Requires PHP:		5.3
+ * Requires PHP:		5.6
  *
  * wsa-cachepurge : The Astral Internet Website Accelerator is a tool that allows you to place 
  * certain elements of a site in buffer memory (cache) inside the server. Once the 
