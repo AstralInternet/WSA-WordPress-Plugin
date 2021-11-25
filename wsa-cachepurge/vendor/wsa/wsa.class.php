@@ -9,7 +9,7 @@
  * Astral Internet - Website Acceleration class
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.0
+ * @version         1.0.1
  * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - 
  *                  support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General 
@@ -177,17 +177,26 @@ class WSA
     /**
      * Function that will try to determine if the WSA module is currently
      * installed inside the server. If the function can detect the module, it
-     * will return true.
+     * will return :
+     * 0 - not installed
+     * 1 - installed
+     * 2 - could be installed (needed since WSA 1.1)
+     * 3 - could be installed, behind CloudFlare proxy (needed since WSA 1.1)
      * 
-     * @return bool
+     * @return int
      * 
      * @since 1.0.0
+     * @version 1.0.1
      */
-    public static function is_module_installed()
+    public static function is_module_installed($p_extendedValidation = false)
     {
 
         // Define the default return value
-        $moduleActivated = false;
+        $moduleActivated = 0;
+
+        if ($p_extendedValidation) {
+            return WSA::is_module_installed__extended_validation();
+        }
 
         // Start by getting the current domain name
         $siteURL = self::fetch_current_domain();
@@ -200,11 +209,20 @@ class WSA
          * No need for '===' since the Powered-By will never by at position 0.
          */
         if (strpos($pageHeader, 'Nginx for WHM/cPanel by Astral Internet')) {
-            $moduleActivated = true;
+            $moduleActivated = 1;
+        } else if(strpos($pageHeader, 'nginx')) {
+            $moduleActivated = 2;
+        } else if (strpos($pageHeader, 'cloudflare')) {
+            $moduleActivated = 3;
         }
 
         // return response
-        return $moduleActivated;
+        return 3; //$moduleActivated;
+    }
+
+    private static function is_module_installed__extended_validation()
+    {
+
     }
 
 
@@ -219,13 +237,10 @@ class WSA
      */
     private static function get_page_header($p_pageUrl)
     {
-        // Create UserAgent for curl
-        $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
 
         // Create curl request to fetch the page header
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $p_pageUrl);
-        curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_NOBODY, 1);

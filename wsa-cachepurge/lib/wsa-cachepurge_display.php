@@ -1,33 +1,33 @@
 <?php
 
 /**
- *  __      _____   _  
- *  \ \    / / __| /_\  
- *   \ \/\/ /\__ \/ _ \ 
+ *  __      _____   _
+ *  \ \    / / __| /_\
+ *   \ \/\/ /\__ \/ _ \
  *    \_/\_/ |___/_/ \_\
- * 
+ *
  * WSA - Website Accelerator Cache Purge - Admin area display
- * 
+ *
  * @author          Astral Internet inc. <support@astralinternet.com>
  * @version         1.0.8
  * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
- * 
- * WSA : The Astral Internet Website Accelerator is a tool that allows you to place 
- * certain elements of a site in buffer memory (cache) inside the server. Once the 
+ *
+ * WSA : The Astral Internet Website Accelerator is a tool that allows you to place
+ * certain elements of a site in buffer memory (cache) inside the server. Once the
  * elements are placed buffer of the server, they can be served much faster to people
  * viewing a website.
- * 
- * This page is the actual on-screen display of the module in the admin area. It 
- * provides information about the caching module and give the option to purge the 
- * cache immediately. 
- * 
+ *
+ * This page is the actual on-screen display of the module in the admin area. It
+ * provides information about the caching module and give the option to purge the
+ * cache immediately.
+ *
  * You may also disable the automatic cache purge from this page.
- * 
+ *
  */
 
- // If this file is called directly, abort.
+// If this file is called directly, abort.
 defined('ABSPATH') or die('No script kiddies please!');
 
 /**
@@ -35,10 +35,10 @@ defined('ABSPATH') or die('No script kiddies please!');
  *
  * @since 1.0.0
  */
- require_once dirname( WSA_CACHEPURGE_FILE ) . '/vendor/wsa/wsa.class.php';
+require_once dirname(WSA_CACHEPURGE_FILE) . '/vendor/wsa/wsa.class.php';
 
 // Update the "auto purge" setting in Wordpress
-if ( isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_set-auto-purge') ) {
+if (isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_set-auto-purge')) {
 
     update_option('wsa-cachepurge_auto-purge', isset($_POST['wsa-cachepurge-cachepurge_save']) ? "on" : "off");
 }
@@ -46,7 +46,7 @@ if ( isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_PO
 ?>
 
 <style>
-/* 
+/*
 The styling has been place in the main display page to reduce the amount of items being loaded each time the backend pages are loaded
  */
 .wsa-cachepurge {max-width: 1000px; margin: 0 auto;transition: all ease 0.3s;padding:0 20px; position:relative}
@@ -61,6 +61,15 @@ The styling has been place in the main display page to reduce the amount of item
 .wsa-cachepurge .clearcache_button:hover {background-color: #ec4e1f; cursor: pointer;}
 .wsa-cachepurge .clearcache_button img {height: 20px; margin-right: 10px;}
 .wsa-cachepurge .wsa_status_box, .wsa-cachepurge .white_box {background-color: #fff; border: 1px solid #ccc; padding: 15px;}
+.wsa-cachepurge .wsa_status_box.good {background-color: #d4edda; color: #155724;}
+.wsa-cachepurge .wsa_status_box.good p {text-align: center;}
+.wsa-cachepurge .wsa_status_box.good span {font-weight: bold;}
+.wsa-cachepurge .wsa_status_box.warning {background-color: #fff3cd; color: #856404;}
+.wsa-cachepurge .wsa_status_box.warning p {text-align: center;}
+.wsa-cachepurge .wsa_status_box.warning span {font-weight: bold;}
+.wsa-cachepurge .wsa_status_box.bad {background-color: #f8d7da; color: #721c24;}
+.wsa-cachepurge .wsa_status_box.bad p {text-align: center;}
+.wsa-cachepurge .wsa_status_box.bad span {font-weight: bold;}
 .wsa-cachepurge .white_box {display: flex; flex-direction: column; align-items: center; margin: 20px 0;}
 .wsa-cachepurge .wsa_status_box p {font-weight: 600; padding: 15px; font-size: 18px; padding: 0; margin: 0;}
 .wsa-cachepurge .wsa_status_box p a {color: #caced1;text-decoration: none;}
@@ -73,26 +82,45 @@ The styling has been place in the main display page to reduce the amount of item
 .wsa-cachepurge .options_check input[type=checkbox] {visibility: hidden;}
 .wsa-cachepurge .options_check label {display: block;position: relative; cursor: pointer;}
 .wsa-cachepurge .options_check .checkmark {position: absolute; top: 0; left: 0; height: 20px; width: 20px; border: 1px solid #ccc; border-radius: 2px; background-color: #fff;}
-.wsa-cachepurge .options_check label:hover input ~ .checkmark {background-color: #efcdc3;} 
-.wsa-cachepurge .options_check label input:checked ~ .checkmark {background-color: #ef6c45;} 
-.wsa-cachepurge .options_check .checkmark:after {content: "";  position: absolute; display: none;} 
-.wsa-cachepurge .options_check label input:checked ~ .checkmark:after {display: block;} 
-.wsa-cachepurge .options_check label .checkmark:after {left: 7px; bottom: 5px; width: 4px; height: 8px; border: solid white; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg)} 
+.wsa-cachepurge .options_check label:hover input ~ .checkmark {background-color: #efcdc3;}
+.wsa-cachepurge .options_check label input:checked ~ .checkmark {background-color: #ef6c45;}
+.wsa-cachepurge .options_check .checkmark:after {content: "";  position: absolute; display: none;}
+.wsa-cachepurge .options_check label input:checked ~ .checkmark:after {display: block;}
+.wsa-cachepurge .options_check label .checkmark:after {left: 7px; bottom: 5px; width: 4px; height: 8px; border: solid white; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg)}
 #wsa-progress {transition: all 5s ease; position: absolute; z-index: 1; top: 0; right: 0; border: solid #d4edda; border-right-width: 0px; border-top-width: 58px;}
 #wsa-close {position: absolute; top: 2px; right: 2px; height: 18px; width: 18px; z-index: 4; cursor: pointer; font-size: 16px;}
 #wsa-close:hover { background-color: #b0d2a8;}
 </style>
-
 <div class="wsa-cachepurge">
     <div class="flex_base" style="justify-content:space-between">
-        <h1><img src="<?=plugins_url( 'ressources/wsa-cachepurge_logo.svg', dirname(__FILE__) )?>"><?=__("Website Accelerator - Vidage de cache", "wsa-cachepurge");?></h1>
-        <div class="wsa_status_box"> <!-- START status box -->
-            <? if (WSAHandler\WSA::is_module_installed()) { ?>
-                <p><?=__("Le module est", "wsa-cachepurge")?> <span style="color: #359944;"> <?=__("disponible", "wsa-cachepurge");?></span></p>
-            <? } else { ?>
-                <p><?=__("Le module est", "wsa-cachepurge")?> <span style="color: #D85454;"> <?=__("non disponible", "wsa-cachepurge");?></span></p>
-                <p style="font-weight: lighter;font-size: 12px; color: #989da1;"><a href="#"><?=__("Appuyer ici pour plus d'information", "wsa-cachepurge");?></a></p>
-            <? } ?>
+        <h1><img src="<?=plugins_url('ressources/wsa-cachepurge_logo.svg', dirname(__FILE__))?>"><?=__("Website Accelerator - Vidage de cache", "wsa-cachepurge");?></h1>
+        <?php $moduleInstalled = WSAHandler\WSA::is_module_installed();
+
+        switch ($moduleInstalled) {
+            case 1:
+                $status = __("disponible", "wsa-cachepurge");
+                $styleColor = "good";
+                break;
+            case 2:
+                $status = __("indéfini", "wsa-cachepurge");
+                $information = __("Le serveur utilise Nginx sans la mention WSA, il est possible que WSA soit actif.", "wsa-cachepurge");
+                $styleColor = "warning";
+                break;
+            case 3:
+                $status = __("indéfini", "wsa-cachepurge");
+                $information = __("Le site est derrière le proxy de Cloudflare, il est possible que WSA soit actif.", "wsa-cachepurge");
+                $styleColor = "warning";
+                break;
+            default:
+                $status = __("non disponible", "wsa-cachepurge");
+                $styleColor = "bad";
+                break;
+        }
+        ?>
+
+        <div class="wsa_status_box <?=$styleColor?>"> <!-- START status box -->
+            <p><?=__("Le module est", "wsa-cachepurge")?> <span> <?=$status?></span></p>
+            <p style="font-weight: lighter;font-size: 12px; max-width: 250px;"><?=$information?></p>
         </div> <!-- END status box -->
     </div>
 
@@ -101,9 +129,9 @@ The styling has been place in the main display page to reduce the amount of item
     <p><?=__("La documentation complète du module est également disponible <a href=\"https://docs.astral360.com/\">ici</a>.", "wsa-cachepurge");?></p>
 
     <?php
-    // If a request was made to purge the cache, process to the cache purge ans display the success message.
-    if ( isset($_REQUEST['purge']) && isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], 'wsa-cachepurge_purge-cache') ) {
-        WSA_Cachepurge_WP::purge_cache(); ?>
+// If a request was made to purge the cache, process to the cache purge ans display the success message.
+if (isset($_REQUEST['purge']) && isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], 'wsa-cachepurge_purge-cache')) {
+    WSA_Cachepurge_WP::purge_cache();?>
         <div id="wsa-message" style="display:flex;z-index:0;position:relative;flex-direction: column;">
             <div id="wsa-close" onClick="removeDiv()">&#x274E;</div>
             <div id="wsa-progress"></div>
@@ -113,12 +141,12 @@ The styling has been place in the main display page to reduce the amount of item
             <div style="display:block;z-index:2;font-size:small;">
                 <?_e("* Un délai jusqu'à 60 secondes est requis pour la suppression de la cache.", "wsa-cachepurge");?>
             </div>
-    </div> 
-        
-        
-        <?php
-    }
-    ?>
+    </div>
+
+
+    <?php
+}
+?>
 
     <div class="white_box">
         <h2><?=__("Vider la mémoire cache", "wsa-cachepurge");?></h2>
@@ -129,7 +157,7 @@ The styling has been place in the main display page to reduce the amount of item
             <input type="hidden" name="purge" value="yes_please">
             <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge_purge-cache')?>">
             <button class="flex_base clearcache_button">
-                <div><img src="<?=plugins_url( 'ressources/clear-single-user-cache-white.png', dirname(__FILE__) )?>"></div>
+                <div><img src="<?=plugins_url('ressources/clear-single-user-cache-white.png', dirname(__FILE__))?>"></div>
                 <div><?=__("Vider la cache", "");?></div>
             </button>
         </form>
@@ -153,8 +181,8 @@ The styling has been place in the main display page to reduce the amount of item
                     <form method="post">
                         <input type="hidden" name="hookForm" value="1">
                         <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge_set-auto-purge')?>">
-                        <input type="checkbox" name="wsa-cachepurge-cachepurge_save" onChange="submit();" <?=get_option('wsa-cachepurge_auto-purge') == "on" ? "checked" : "" ?>> 
-                        <span class="checkmark"></span> 
+                        <input type="checkbox" name="wsa-cachepurge-cachepurge_save" onChange="submit();" <?=get_option('wsa-cachepurge_auto-purge') == "on" ? "checked" : ""?>>
+                        <span class="checkmark"></span>
                     </form>
                 </label>
             </div>
@@ -162,7 +190,7 @@ The styling has been place in the main display page to reduce the amount of item
         </div>
     </div>
 </div>
-<script> 
+<script>
 
 // Fade the "success" message once the cache has been purged.
 var popupBloc = document.getElementById("wsa-message");
