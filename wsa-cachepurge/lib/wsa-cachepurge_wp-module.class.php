@@ -154,6 +154,7 @@ class WSA_Cachepurge_WP
 		$autoPurge = get_option('wsa-cachepurge_auto-purge');
 
 		// Add switch to update the previous string setting to the new integer format
+		// This will be deprecated and removed in futur version
 		switch ($autoPurge) {
 			
 			case 'on':
@@ -236,9 +237,10 @@ class WSA_Cachepurge_WP
 	}
 
 	/**
-	 * Function to purge the cache will WP hooks included
+	 * Function to purge the cache with WP hooks included
 	 * 
 	 * @since    1.0.1
+	 * @version  1.1.0
 	 * @return void
 	 */
 	public static function purge_cache()
@@ -246,6 +248,24 @@ class WSA_Cachepurge_WP
 
 		// Event hook before purging the cache
 		do_action('wsa-cachepurge_before_cache_purge');
+
+		// Fetch the auto purge setting to update the WP options to the new module version.
+		// This will be deprecated and removed in futur version
+		$autoPurge = get_option('wsa-cachepurge_auto-purge');
+
+		// Add switch to update the previous string setting to the new integer format
+		switch ($autoPurge) {
+			
+			case 'on':
+				// Update setting to int '1'
+				update_option('wsa-cachepurge_auto-purge', 1);
+				break;
+
+			case 'off':
+				// Update setting to int '0'
+				update_option('wsa-cachepurge_auto-purge', 0);
+				break;
+		}
 
 		// Call the purge cache function from the WSA class
 		WSAHandler\WSA::purge_cache();
