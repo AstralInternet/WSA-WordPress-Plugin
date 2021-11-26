@@ -9,8 +9,8 @@
  * Astral Internet - Website Acceleration class
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.1
- * @copyright       2019 Copyright (C) 2019, Astral Internet inc. -
+ * @version         1.0.2
+ * @copyright       2021 Copyright (C) 2021, Astral Internet inc. -
  *                  support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General
  *                  Public License, version 3 or higher
@@ -33,7 +33,9 @@
  *  : installed inside the server. If the function can detect the module, it
  *  : will return true.
  *
- *
+ *  $p_extendedValidation : Default to false, When true, the module will look 
+ *                          further than simple checking a page header 
+ *                          response.
  *
  * WSA:purge_cache (bool $p_purgeAll = false, string $p_fullPath = null)
  *  : Function that will write the file being check by the WSA deamon in order
@@ -44,7 +46,7 @@
  *                that belong to the user, otherwise the class will try to
  *                empty the cache for the domain in use only.
  *
- *   $p_fullPath  : Allow you to override the default ".wsa" folder. If for som
+ *  $p_fullPath  : Allow you to override the default ".wsa" folder. If for som
  *                 reason the class cannot find the path, it can be manually
  *                 specified.
  *
@@ -80,9 +82,9 @@ class WSA
      * manually provide the folder path if for some reason the script doesn’t
      * manage to find it itself.
      *
-     * @param sting  Full path where the .wsa folder is.
-     * @param bool   Set to true to empty all the user cache, otherwise will
-     *               empty only the crrent domain cache.
+     * @param string  Full path where the .wsa folder is.
+     * @param bool    Set to true to empty all the user cache, otherwise will
+     *                empty only the crrent domain cache.
      *
      * @return bool  True if the file was properly created
      *
@@ -98,7 +100,7 @@ class WSA
 
             // Build the path, trim start and end backslash to prevent error.
             $absPath = '/' . trim($p_fullPath, '/') . '/'
-            . self::WSA_CACHE_PATH;
+                . self::WSA_CACHE_PATH;
 
             // Set the valid flag if the file path is good.
             if (is_writable($absPath)) {
@@ -181,6 +183,9 @@ class WSA
      * 2 - could be installed (needed since WSA 1.1)
      * 3 - could be installed, behind CloudFlare proxy (needed since WSA 1.1)
      *
+     * @param bool Default to false, When true, the module will look further 
+     *             than simple checking a page header response.
+     * 
      * @return int
      *
      * @since 1.0.0
@@ -192,6 +197,7 @@ class WSA
         // Define the default return value
         $moduleActivated = 0;
 
+        // Return the extended validation result and exit.
         if ($p_extendedValidation) {
             return self::is_module_installed__extended_validation();
         }
@@ -215,16 +221,15 @@ class WSA
         }
 
         // return response
-        return 3; //$moduleActivated;
+        return $moduleActivated;
     }
 
     /**
      * Function that check if WSA interact with the clear file.
      * If it's not the case, the module is not active.
-     * 0 - not installed
-     * 1 - installed
      *
-     * @return int
+     * @return int 0 - not installed
+     *             1 - installed
      *
      * @since 1.0.2
      */
@@ -321,7 +326,7 @@ class WSA
 
         // Build the assume absolute path based on folder
         $absPath = '/' . $splittedFolders[1] . '/' . $splittedFolders[2] . '/'
-        . self::WSA_CACHE_PATH . '/';
+            . self::WSA_CACHE_PATH . '/';
 
         /**
          * If the build path is not valid, try to find a valid path by working

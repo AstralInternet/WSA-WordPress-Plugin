@@ -9,8 +9,8 @@
  * WSA - Website Accelerator Cache Purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.8
- * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - support@astralinternet.com
+ * @version         1.1.0
+ * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
  * 
@@ -73,7 +73,7 @@ class WSA_Cachepurge_WP
 	 */
 	public static function add_purge_top_admin_menu()
 	{
-		
+
 		global $wp_admin_bar;
 
 		// Build top menu url with nonce protection
@@ -196,7 +196,7 @@ class WSA_Cachepurge_WP
 
 		// Check if the option already exist 
 		if (!get_option('wsa-cachepurge_wsa-installed')) {
-			
+
 			update_option('wsa-cachepurge_wsa-installed', 0);
 		}
 	}

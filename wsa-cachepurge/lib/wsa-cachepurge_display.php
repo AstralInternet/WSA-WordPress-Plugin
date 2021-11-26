@@ -9,8 +9,8 @@
  * WSA - Website Accelerator Cache Purge - Admin area display
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.9
- * @copyright       2019 Copyright (C) 2019, Astral Internet inc. - support@astralinternet.com
+ * @version         1.1.0
+ * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
  *
@@ -40,26 +40,52 @@ require_once dirname(WSA_CACHEPURGE_FILE) . '/vendor/wsa/wsa.class.php';
 /**
  * Load the display class
  *
- * @since 1.0.9
+ * @since 1.1.0
  */
 require_once dirname(WSA_CACHEPURGE_FILE) . '/lib/wsa-cachepurge_display.class.php';
 
-// Update the "auto purge" setting in Wordpress
+
+/**
+ * Update the "auto purge" setting in Wordpress
+ * Trigger when user click on the auto purge checkbox
+ * 
+ * @since 1.0.0
+ */
 if (isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_set-auto-purge')) {
     update_option('wsa-cachepurge_auto-purge', isset($_POST['wsa-cachepurge-cachepurge_save']) ? "on" : "off");
 }
 
-// If a request was made to purge the cache, process to the cache purge ans display the success message.
+/**
+ * If a request was made to purge the cache, process to the cache purge ans display the success message.
+ * Trigger when user press on the clear cache button
+ * 
+ * @since 1.1.0
+ */
 if (isset($_REQUEST['purge']) && isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], 'wsa-cachepurge_purge-cache')) {
+
+    // Purge the WSA server cache
     WSA_Cachepurge_WP::purge_cache();
+
+    // Fetch the informative box messages
     $messageBox = WSA_Display::build_message_box("emptyCache");
 }
 
-// Check if the WSA is installer with an extended validation
+/**
+ * Check if the WSA is installed with the extended validation.
+ * Trigger when user press on the advance verification button
+ * 
+ * @since 1.1.0
+ */
 if (isset($_POST['extendedValidation']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_extended-validation')) {
+
+    // Build the WSA status box, function will also check the current status of the WSA with the advance validation
     $statusbox = WSA_Display::build_status_box(true);
+
+    // Return the informative text box once the verification is done, with the verification result
     $messageBox = WSA_Display::build_message_box("advanceValidation");
 } else {
+
+    // Return the informative text box with simple module verification.
     $statusbox = WSA_Display::build_status_box();
 }
 ?>
@@ -115,7 +141,8 @@ The styling has been place in the main display page to reduce the amount of item
 <div class="wsa-cachepurge">
     <div class="flex_base" style="justify-content:space-between">
         <h1><img src="<?=plugins_url('ressources/wsa-cachepurge_logo.svg', dirname(__FILE__))?>"><?=__("Website Accelerator - Vidage de cache", "wsa-cachepurge");?></h1>
-        <div class="wsa_status_box <?=$statusbox['styleColor']?>"> <!-- START status box -->
+        <!-- START status box -->
+        <div class="wsa_status_box <?=$statusbox['styleColor']?>">
             <div>
                 <p><?=__("Le module est", "wsa-cachepurge")?> <span> <?=$statusbox['status']?></span></p>
                 <p style="font-weight: lighter;font-size: 12px; max-width: 250px;"><?=$statusbox['information']?></p>
@@ -129,15 +156,16 @@ The styling has been place in the main display page to reduce the amount of item
                 </button>
                 </form>
             </div>
-        </div> <!-- END status box -->
+        </div>
+<!-- END status box -->
     </div>
 
-    <p><?=__("L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/fr\">Astral Internet</a> est un outil qui permet de placer certains éléments d’un site Web dans une mémoire tampon (cache) à l’intérieur du serveur. Une fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront servis beaucoup plus rapidement aux visiteurs visionnant votre site.", "wsa-cachepurge");?></p>
-    <p><?=__("Pour plus d'information concernant ce module, veuillez lire l’article suivant « <a href=\"https://www.astralinternet.com/blog/fr/fini-les-sites-web-trop-lents/\">Fini les sites web trop lents!</a> ».", "wsa-cachepurge");?></p>
+    <p><?=__("L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/\">Astral Internet</a> est un outil qui permet de placer certains éléments d’un site Web dans une mémoire tampon (cache) à l’intérieur du serveur. Une fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront servis beaucoup plus rapidement aux visiteurs visionnant votre site.", "wsa-cachepurge");?></p>
+    <p><?=__("Pour plus d'information concernant ce module, veuillez lire l’article suivant « <a href=\"https://www.astralinternet.com/produit/fini-les-sites-trop-lents/\">Fini les sites web trop lents!</a> ».", "wsa-cachepurge");?></p>
     <p><?=__("La documentation complète du module est également disponible <a href=\"https://docs.astral360.com/\">ici</a>.", "wsa-cachepurge");?></p>
 
     <?php
-// If a request was made to purge the cache, process to the cache purge ans display the success message.
+// If a message needs to be displayed in the informative box, it will be displayed here.
 if (isset($messageBox)) {?>
     <div id="wsa-message" class="wsa-message-box <?=$messageBox['styleColor']?>" style="display:flex;z-index:0;position:relative;flex-direction: column;">
         <div id="wsa-close" onClick="removeDiv()">×</div>
