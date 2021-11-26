@@ -33,6 +33,7 @@ This plugin will function on servers that have the Website Accelerator installed
 = 1.1.0 =
 * Updated the WSA module class to the version 1.0.2 (was previouly on version 1.0.0)
 * Change the method used to detect if the WSA module is installed. Work will previous version of WSA and with the newer versions 1.1.X
+* Removed jQuery dependency, JS is now PureJS
 
 = 1.0.9 =
 * New name for the plugin.
