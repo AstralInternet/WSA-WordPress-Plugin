@@ -40,12 +40,12 @@ class WSA_Display
 
     /**
      * Build the text array needed for the module status box in the admin area
-     * 
+     *
      * @param bool Defaul false, force the WSA class to use the extented
      *             validation mode.
-     * 
+     *
      * @return array Status bos texte. [status]/[information]/[styleColor]
-     * 
+     *
      * @since    1.1.0
      */
     public static function build_status_box($p_extendedValidation = false)
@@ -59,7 +59,7 @@ class WSA_Display
             // Define the module has enabled.
             $moduleInstalled = 1;
 
-        // Procedd to a new verification if the last chack period has expired or was never set
+            // Procedd to a new verification if the last chack period has expired or was never set
         } else {
 
             // Validate the module installation
@@ -71,14 +71,14 @@ class WSA_Display
                 // Update the check time to "now" in the WP option table.
                 update_option('wsa-cachepurge_wsa-installed', time());
 
-            // If the module is not installed
+                // If the module is not installed
             } else {
 
                 // prevent update if value is already 0, redure MySQL call
                 if ($lastCheck != 0) {
 
                     // Set the last time check to 0.
-                    update_option('wsa-cachepurge_wsa-installed', 0); 
+                    update_option('wsa-cachepurge_wsa-installed', 0);
                 }
             }
         }
@@ -107,7 +107,7 @@ class WSA_Display
                 $data['styleColor'] = "warning";
                 break;
 
-            // Module id not installed on server 
+            // Module id not installed on server
             default:
                 $data['status'] = __("non disponible", "wsa-cachepurge");
                 $data['information'] = "";
@@ -124,15 +124,19 @@ class WSA_Display
      *
      * @param string A string corresponding to the type of message to be returned
      *               emptyCache : Message once that cache has been cleared.
-     *               AdvanceValidation : Message whe nthe user trigger the advance 
+     *               AdvanceValidation : Message whe nthe user trigger the advance
      *               module validation.
-     * 
-     * @return array [title]/[information]/[styleColor]/[animation] 
-     * 
+     *
+     * @return array [title]/[information]/[styleColor]/[animation]
+     *
      * @since    1.1.0
      */
     public static function build_message_box($p_message)
     {
+
+        // Message enable by default
+        $data['gotMessage'] = true;
+
         // Build the message array based on the require task.
         switch ($p_message) {
 
@@ -159,9 +163,23 @@ class WSA_Display
                 }
                 break;
 
+            case 'autoPurge':
+                if (get_option('wsa-cachepurge_auto-purge') == 1) {
+                    $data['title'] = __("Le nettoyage automatique a été activé", "wsa-cachepurge");
+                    $data['message'] = __("La cache se videra automatiquement lors de la modification d'une page ou d'un article.", "wsa-cachepurge");
+                } else {
+                    $data['title'] = __("Le nettoyage automatique a été désactivé", "wsa-cachepurge");
+                    $data['message'] = __("La cache se se videra plus automatiquement lors de la modification d'une page ou d'un article.", "wsa-cachepurge");
+                }
+
+                $data['styleColor'] = "good";
+                $data['animation'] = false;
+                break;
+
             // Return empty array when invalid value is passed
             default:
-                $data[]  = '';
+                // disable message
+                $data['gotMessage'] = false;
                 break;
         }
 

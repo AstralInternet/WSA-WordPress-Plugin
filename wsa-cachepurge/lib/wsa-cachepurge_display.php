@@ -44,50 +44,61 @@ require_once dirname(WSA_CACHEPURGE_FILE) . '/vendor/wsa/wsa.class.php';
  */
 require_once dirname(WSA_CACHEPURGE_FILE) . '/lib/wsa-cachepurge_display.class.php';
 
+// Disable extended validation by default
+$extendedValidation = false;
+// Default message tipe
+$messageType = "";
 
 /**
- * Update the "auto purge" setting in Wordpress
- * Trigger when user click on the auto purge checkbox
- * 
- * @since 1.0.0
- */
-if (isset($_POST['hookForm']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_set-auto-purge')) {
-    update_option('wsa-cachepurge_auto-purge', isset($_POST['wsa-cachepurge-cachepurge_save']) ? "on" : "off");
-}
-
-/**
- * If a request was made to purge the cache, process to the cache purge ans display the success message.
- * Trigger when user press on the clear cache button
- * 
+ * Post trust verification
+ *
  * @since 1.1.0
  */
-if (isset($_REQUEST['purge']) && isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], 'wsa-cachepurge_purge-cache')) {
+if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge')) {
 
-    // Purge the WSA server cache
-    WSA_Cachepurge_WP::purge_cache();
+    switch ($_POST['action']) {
 
-    // Fetch the informative box messages
-    $messageBox = WSA_Display::build_message_box("emptyCache");
+        // Update the "auto purge" setting in Wordpress
+        // Trigger when user click on the auto purge checkbox
+        case 'autoPurge':
+            if (isset($_POST['wsa-cachepurge-cachepurge_save']) && $_POST['wsa-cachepurge-cachepurge_save'] == "on") {
+                update_option('wsa-cachepurge_auto-purge', 1);
+            } else {
+                update_option('wsa-cachepurge_auto-purge', 0);
+            }
+
+            $messageType = "autoPurge";
+            break;
+
+        // If a request was made to purge the cache, process to the cache purge ans display the success message.
+        // Trigger when user press on the clear cache button
+        case 'purgeCache':
+            // Purge the WSA server cache
+            WSA_Cachepurge_WP::purge_cache();
+
+            // Fetch the informative box messages
+            $messageType = "emptyCache";
+            break;
+
+        // Check if the WSA is installed with the extended validation.
+        // Trigger when user press on the advance verification button
+        case 'extendedValidation':
+            // force extended validation
+            $extendedValidation = true;
+
+            // Return the informative text box once the verification is done, with the verification result
+            $messageType = "advanceValidation";
+            break;
+
+        default:
+            break;
+    }
 }
 
-/**
- * Check if the WSA is installed with the extended validation.
- * Trigger when user press on the advance verification button
- * 
- * @since 1.1.0
- */
-if (isset($_POST['extendedValidation']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge_extended-validation')) {
+// Build the WSA status box, function will also check the current status of the WSA with the advance validation
+$statusbox = WSA_Display::build_status_box($extendedValidation);
+$messageBox = WSA_Display::build_message_box($messageType);
 
-    // Build the WSA status box, function will also check the current status of the WSA with the advance validation
-    $statusbox = WSA_Display::build_status_box(true);
-
-    // Return the informative text box once the verification is done, with the verification result
-    $messageBox = WSA_Display::build_message_box("advanceValidation");
-} else {
-
-    // Return the informative text box with simple module verification.
-    $statusbox = WSA_Display::build_status_box();
-}
 ?>
 
 <style>
@@ -149,8 +160,8 @@ The styling has been place in the main display page to reduce the amount of item
             </div>
             <div style="text-align: center;">
                 <form method="post">
-                    <input type="hidden" name="extendedValidation" value="1">
-                    <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge_extended-validation')?>">
+                    <input type="hidden" name="action" value="extendedValidation">
+                    <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge')?>">
                     <button class="flex_base validation_button">
                     <div><?=__("Vérification avancée", "wsa-cachepurge");?></div>
                 </button>
@@ -166,12 +177,12 @@ The styling has been place in the main display page to reduce the amount of item
 
     <?php
 // If a message needs to be displayed in the informative box, it will be displayed here.
-if (isset($messageBox)) {?>
+if ($messageBox['gotMessage']) {?>
     <div id="wsa-message" class="wsa-message-box <?=$messageBox['styleColor']?>" style="display:flex;z-index:0;position:relative;flex-direction: column;">
         <div id="wsa-close" onClick="removeDiv()">×</div>
-        <?php if ($messageBox['animation']) { ?>
+        <?php if ($messageBox['animation']) {?>
             <div id="wsa-progress"></div>
-        <?php } ?>
+        <?php }?>
         <div style="display:block;z-index:2;">
             <?=$messageBox['title'];?>
         </div>
@@ -188,8 +199,8 @@ if (isset($messageBox)) {?>
 
 
         <form method="post">
-            <input type="hidden" name="purge" value="yes_please">
-            <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge_purge-cache')?>">
+            <input type="hidden" name="action" value="purgeCache">
+            <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge')?>">
             <button class="flex_base clearcache_button">
                 <div><img src="<?=plugins_url('ressources/clear-single-user-cache-white.png', dirname(__FILE__))?>"></div>
                 <div><?=__("Vider la cache", "");?></div>
@@ -213,9 +224,9 @@ if (isset($messageBox)) {?>
             <div class="options_check">
                 <label>
                     <form method="post">
-                        <input type="hidden" name="hookForm" value="1">
-                        <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge_set-auto-purge')?>">
-                        <input type="checkbox" name="wsa-cachepurge-cachepurge_save" onChange="submit();" <?=get_option('wsa-cachepurge_auto-purge') == "on" ? "checked" : ""?>>
+                        <input type="hidden" name="action" value="autoPurge">
+                        <input type="hidden" name="nonce" value="<?=wp_create_nonce('wsa-cachepurge')?>">
+                        <input type="checkbox" name="wsa-cachepurge-cachepurge_save" onChange="submit();" <?=get_option('wsa-cachepurge_auto-purge') == 1 ? "checked" : ""?>>
                         <span class="checkmark"></span>
                     </form>
                 </label>
@@ -229,10 +240,14 @@ if (isset($messageBox)) {?>
 // Fade the "success" message once the cache has been purged.
 var popupBloc = document.getElementById("wsa-message");
 var popupMessage = document.getElementById("wsa-progress");
-var popupMessageSize = popupBloc.offsetWidth - 4;
-popupMessage.style.borderRightWidth = popupMessageSize + "px";
+if (popupBloc !== null) {
+    var popupMessageSize = popupBloc.offsetWidth - 4;
+    if (popupMessage !== null) {
+        popupMessage.style.borderRightWidth = popupMessageSize + "px";
+    }
+}
 
 function removeDiv(){
-    jQuery('#wsa-message').remove();
+    document.getElementById("wsa-message").remove();
 }
 </script>

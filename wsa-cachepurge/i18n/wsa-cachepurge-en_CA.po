@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wsa-cachepurge\n"
-"POT-Creation-Date: 2021-11-26 11:45-0500\n"
-"PO-Revision-Date: 2021-11-26 11:46-0500\n"
+"POT-Creation-Date: 2021-11-26 16:13-0500\n"
+"PO-Revision-Date: 2021-11-26 16:16-0500\n"
 "Last-Translator: \n"
 "Language-Team: Astral 360\n"
 "Language: en_CA\n"
@@ -16,89 +16,110 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: lib/wsa-cachepurge_display.class.php:53
+#: lib/wsa-cachepurge_display.class.php:91
 msgid "disponible"
 msgstr "available"
 
-#: lib/wsa-cachepurge_display.class.php:59
-#: lib/wsa-cachepurge_display.class.php:65
+#: lib/wsa-cachepurge_display.class.php:98
+#: lib/wsa-cachepurge_display.class.php:105
 msgid "indéfini"
 msgstr "undefined"
 
-#: lib/wsa-cachepurge_display.class.php:60
+#: lib/wsa-cachepurge_display.class.php:99
 msgid ""
 "Le serveur utilise Nginx sans la mention WSA, il est possible que WSA soit "
 "actif."
 msgstr "The server uses Nginx without WSA, it is possible that WSA is active."
 
-#: lib/wsa-cachepurge_display.class.php:66
+#: lib/wsa-cachepurge_display.class.php:106
 msgid ""
 "Le site est derrière le proxy de Cloudflare, il est possible que WSA soit "
 "actif."
 msgstr ""
 "The site is behind Cloudflare's proxy, it is possible that WSA is active."
 
-#: lib/wsa-cachepurge_display.class.php:71
+#: lib/wsa-cachepurge_display.class.php:112
 msgid "non disponible"
 msgstr "not available"
 
-#: lib/wsa-cachepurge_display.class.php:84
+#: lib/wsa-cachepurge_display.class.php:145
 msgid "La cache a été vidée"
 msgstr "The cache is now empty"
 
-#: lib/wsa-cachepurge_display.class.php:85
+#: lib/wsa-cachepurge_display.class.php:146
 msgid ""
 "* Un délai jusqu'à 60 secondes est requis pour la suppression de la cache."
 msgstr "* May take up to 60 seconds to clear the cache."
 
-#: lib/wsa-cachepurge_display.class.php:90
+#: lib/wsa-cachepurge_display.class.php:153
 msgid "Vérification avancé complété."
 msgstr "Advanced verification completed."
 
-#: lib/wsa-cachepurge_display.class.php:92
+#: lib/wsa-cachepurge_display.class.php:158
 msgid "Le module WSA est bien disponible."
 msgstr "The WSA module is available."
 
-#: lib/wsa-cachepurge_display.class.php:95
+#: lib/wsa-cachepurge_display.class.php:161
 msgid "Le module WSA n'est pas disponible."
 msgstr "The WSA module is not available."
 
-#: lib/wsa-cachepurge_display.php:117
+#: lib/wsa-cachepurge_display.class.php:168
+msgid "Le nettoyage automatique a été activé"
+msgstr "Automatic cleaning has been enabled"
+
+#: lib/wsa-cachepurge_display.class.php:169
+msgid ""
+"La cache se videra automatiquement lors de la modification d'une page ou "
+"d'un article."
+msgstr "The cache will automatically clear when editing a page or article."
+
+#: lib/wsa-cachepurge_display.class.php:171
+msgid "Le nettoyage automatique a été désactivé"
+msgstr "Automatic cleaning has been disabled"
+
+#: lib/wsa-cachepurge_display.class.php:172
+msgid ""
+"La cache se se videra plus automatiquement lors de la modification d'une "
+"page ou d'un article."
+msgstr ""
+"The cache will be cleared more automatically when editing a page or article."
+
+#: lib/wsa-cachepurge_display.php:154
 msgid "Website Accelerator - Vidage de cache"
 msgstr "Website Accelerator - Cache purging"
 
-#: lib/wsa-cachepurge_display.php:120
+#: lib/wsa-cachepurge_display.php:158
 msgid "Le module est"
 msgstr "The module is"
 
-#: lib/wsa-cachepurge_display.php:128
+#: lib/wsa-cachepurge_display.php:166
 msgid "Vérification avancée"
 msgstr "Advanced Verification"
 
-#: lib/wsa-cachepurge_display.php:135
+#: lib/wsa-cachepurge_display.php:174
 msgid ""
-"L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/fr"
+"L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/"
 "\">Astral Internet</a> est un outil qui permet de placer certains éléments "
 "d’un site Web dans une mémoire tampon (cache) à l’intérieur du serveur. Une "
 "fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront "
 "servis beaucoup plus rapidement aux visiteurs visionnant votre site."
 msgstr ""
-"<a href=\"https://www.astralinternet.com/en\">Astral Internet's</a> Website "
+"<a href=\"https://www.astralinternet.com/\">Astral Internet's</a> Website "
 "Accelerator is a tool that places certain elements of a website in a buffer "
 "(cache) inside the server. Once the site elements in the server buffer, they "
 "will be served much faster to visitors viewing your site."
 
-#: lib/wsa-cachepurge_display.php:136
+#: lib/wsa-cachepurge_display.php:175
 msgid ""
 "Pour plus d'information concernant ce module, veuillez lire l’article "
-"suivant « <a href=\"https://www.astralinternet.com/blog/fr/fini-les-sites-"
-"web-trop-lents/\">Fini les sites web trop lents!</a> »."
+"suivant « <a href=\"https://www.astralinternet.com/produit/fini-les-sites-"
+"trop-lents/\">Fini les sites web trop lents!</a> »."
 msgstr ""
 "For more information about this module, please read the following article "
-"\"<a href=\"https://www.astralinternet.com/blog/en/no-more-slow-websites/"
+"\"<a href=\"https://www.astralinternet.com/en/product/no-more-slow-websites/"
 "\">No more slow websites!</a>\"."
 
-#: lib/wsa-cachepurge_display.php:137
+#: lib/wsa-cachepurge_display.php:176
 msgid ""
 "La documentation complète du module est également disponible <a href="
 "\"https://docs.astral360.com/\">ici</a>."
@@ -106,11 +127,11 @@ msgstr ""
 "The complete documentation of the module is also available <a href=\"https://"
 "docs.astral360.com/en/\">here</a>."
 
-#: lib/wsa-cachepurge_display.php:157
+#: lib/wsa-cachepurge_display.php:197
 msgid "Vider la mémoire cache"
 msgstr "Clearing the cache"
 
-#: lib/wsa-cachepurge_display.php:158
+#: lib/wsa-cachepurge_display.php:198
 msgid ""
 "Il est possible qu'après avoir modifié une page de votre site, le changement "
 "ne soit pas visible instantanément. Lorsque c’est le cas, cela signifie que "
@@ -124,15 +145,15 @@ msgstr ""
 "server to retrieve a new version of your site, up to date, so your change "
 "will be visible to everyone."
 
-#: lib/wsa-cachepurge_display.php:166 lib/wsa-cachepurge_wp-module.class.php:92
+#: lib/wsa-cachepurge_display.php:206 lib/wsa-cachepurge_wp-module.class.php:99
 msgid "Vider la cache"
 msgstr "Clear cache"
 
-#: lib/wsa-cachepurge_display.php:170
+#: lib/wsa-cachepurge_display.php:210
 msgid "Notes :"
 msgstr "Notes :"
 
-#: lib/wsa-cachepurge_display.php:171
+#: lib/wsa-cachepurge_display.php:211
 msgid ""
 "En aucun cas, vider la mémoire cache ne peut affecter le bon fonctionnement "
 "de votre site."
@@ -140,19 +161,19 @@ msgstr ""
 "In any case, clearing the cache memory can not affect the proper functioning "
 "of your site."
 
-#: lib/wsa-cachepurge_display.php:173
+#: lib/wsa-cachepurge_display.php:213
 msgid ""
 "Si les changements ou les modifications dans votre site ne sont toujours pas "
 "visibles :"
 msgstr "If the changes in your site are still not visible:"
 
-#: lib/wsa-cachepurge_display.php:175
+#: lib/wsa-cachepurge_display.php:215
 msgid ""
 "Assurez-vous d’avoir bien enregistré les modifications dans vos pages/"
 "articles."
 msgstr "Make sure you have saved the changes to your pages / articles."
 
-#: lib/wsa-cachepurge_display.php:176
+#: lib/wsa-cachepurge_display.php:216
 msgid ""
 "Si vous utilisez une extension de mise en cache comme WP Rocket, Swift, W3 "
 "Total Cache, WP Super Cache ou autre, assurez-vous de bien vider la mémoire "
@@ -162,7 +183,7 @@ msgstr ""
 "Cache, WP Super Cache, or whatever, be sure to clear the cache of the "
 "extension before clearing the server cache."
 
-#: lib/wsa-cachepurge_display.php:177
+#: lib/wsa-cachepurge_display.php:217
 msgid ""
 "Si vous utilisez un CDN (Content Delivery Network) comme CloudFlare, assurez-"
 "vous que celui-ci est en mode de développement et/ou que la cache du CDN est "
@@ -172,7 +193,7 @@ msgstr ""
 "sure that CloudFlare is in development mode and / or that the CDN cache is "
 "also flushed."
 
-#: lib/wsa-cachepurge_display.php:194
+#: lib/wsa-cachepurge_display.php:234
 msgid ""
 "Lorsqu’activée, la cache du serveur sera vidée automatiquement à chaque "
 "changement effectué dans une page ou un article."
@@ -180,11 +201,11 @@ msgstr ""
 "When enabled, the server cache will be cleared automatically each time a "
 "page or article is changed."
 
-#: lib/wsa-cachepurge_wp-module.class.php:108
+#: lib/wsa-cachepurge_wp-module.class.php:115
 msgid "Module de cache"
 msgstr "Cache Module"
 
-#: lib/wsa-cachepurge_wp-module.class.php:129
+#: lib/wsa-cachepurge_wp-module.class.php:136
 msgid "Réglages"
 msgstr "Settings"
 
