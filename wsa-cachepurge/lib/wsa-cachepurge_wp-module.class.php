@@ -144,29 +144,37 @@ class WSA_Cachepurge_WP
 	 * purging is activated in the plugin.
 	 * 
 	 * @since    1.0.0
+	 * @version  1.1.0
 	 * @return void
 	 */
 	public static function purge_hooks()
 	{
 
-		// Update the option value in the DB
-		if (get_option('cpwsa_auto-purge')) {
+		// Fetch the auto purge setting
+		$autoPurge = get_option('wsa-cachepurge_auto-purge');
 
-			// Get previous option
-			$autoPurge = get_option('cpwsa_auto-purge');
+		// Add switch to update the previous string setting to the new integer format
+		switch ($autoPurge) {
+			
+			case 'on':
+				// Update setting to int '1'
+				update_option('wsa-cachepurge_auto-purge', 1);
 
-			// Set new option
-			update_option('wsa-cachepurge_auto-purge', $autoPurge);
+				//purge the user cache
+				WSAHandler\WSA::purge_cache();
+				break;
 
-			// Remove previous option
-			delete_option('cpwsa_auto-purge', "on");
-		}
+			case 'off':
 
-		// Purge only if the auto purge is enable
-		if (get_option('wsa-cachepurge_auto-purge') == "on") {
+				// Update setting to int '0'
+				update_option('wsa-cachepurge_auto-purge', 0);
+				break;
 
-			//purge the user cache
-			WSAHandler\WSA::purge_cache();
+			default:
+
+				// Purge the user cache
+				WSAHandler\WSA::purge_cache();
+				break;
 		}
 	}
 
@@ -189,9 +197,9 @@ class WSA_Cachepurge_WP
 				// Define the option value
 				switch ($singleOptions) {
 
-					// custom setting for the auto cache purge, need to be set to 'on'
+					// enable auto-purge by default
 					case 'wsa-cachepurge_auto-purge':
-						$value='on';
+						$value=1;
 						break;
 
 					default:
