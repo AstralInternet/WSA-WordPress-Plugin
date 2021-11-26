@@ -31,6 +31,13 @@ defined('ABSPATH') or die('No script kiddies please!');
 class WSA_Cachepurge_WP
 {
 
+    /**
+     * Define the module options used for the activate and deactivate function
+     *
+     * @since 1.1.0
+     */
+	const WP_OPTIONS_LIST = array('wsa-cachepurge_wsa-installed', 'wsa-cachepurge_auto-purge');
+
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
@@ -168,36 +175,33 @@ class WSA_Cachepurge_WP
 	 * the automatic purge trigger.
 	 * 
 	 * @since    1.0.0
+	 * @version  1.1.0
 	 * @return void
 	 */
 	public static function activate()
 	{
+		// Parse each options used by the module
+		foreach (WP_OPTIONS_LIST as $singleOptions) {
 
-		// Check if the option already exist 
-		if (!get_option('wsa-cachepurge_auto-purge')) {
+			// Check if the option already exist 
+			if (!get_option($singleOptions)) {
 
-			// Check if the version was set from a previous version
-			if (!get_option('cpwsa_auto-purge')) {
+				// Define the option value
+				switch ($singleOptions) {
 
-				// Add the options with the default value
-				update_option('wsa-cachepurge_auto-purge', "on");
-			} else {
+					// custom setting for the auto cache purge, need to be set to 'on'
+					case 'wsa-cachepurge_auto-purge':
+						$value='on';
+						break;
 
-				// Get previous option
-				$autoPurge = get_option('cpwsa_auto-purge');
+					default:
+						$value=0;
+						break;
+				}
 
-				// Set new option
-				update_option('wsa-cachepurge_auto-purge', $autoPurge);
-
-				// Remove previous option
-				delete_option('cpwsa_auto-purge', "on");
+				// add/update tthe option in the WP database
+				update_option($singleOptions, $value);
 			}
-		}
-
-		// Check if the option already exist 
-		if (!get_option('wsa-cachepurge_wsa-installed')) {
-
-			update_option('wsa-cachepurge_wsa-installed', 0);
 		}
 	}
 
@@ -206,33 +210,22 @@ class WSA_Cachepurge_WP
 	 * database.
 	 * 
 	 * @since    1.0.0
+	 * @version  1.1.0
 	 * @return void
 	 */
 	public static function uninstall()
 	{
+		// Parse each options used by the module
+		foreach (WP_OPTIONS_LIST as $singleOptions) {
 
-		// Check if the option already exist 
-		if (get_option('cpwsa_auto-purge')) {
+			// First check if the options exist
+			if (get_option($singleOptions)) {
 
-			// remove the option we added in the db
-			delete_option('cpwsa_auto-purge');
-		}
-
-		// Check if the option already exist 
-		if (get_option('wsa-cachepurge_auto-purge')) {
-
-			// remove the option we added in the db
-			delete_option('wsa-cachepurge_auto-purge');
-		}
-
-		// Check if the option already exist
-		if (get_option('wsa-cachepurge_wsa-installed')) {
-
-			// remove the option we added in the db
-			delete_option('wsa-cachepurge_wsa-installed');
+				// remove the option from the DB
+				delete_option($singleOptions);
+			}
 		}
 	}
-
 
 	/**
 	 * Function to purge the cache will WP hooks included
