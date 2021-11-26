@@ -9,7 +9,7 @@
  * Astral Internet - Website Acceleration class
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.0.2
+ * @version         1.1.0
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. -
  *                  support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General
