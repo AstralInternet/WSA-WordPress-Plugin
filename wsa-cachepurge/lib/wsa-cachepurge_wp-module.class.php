@@ -73,6 +73,7 @@ class WSA_Cachepurge_WP
 	 */
 	public static function add_purge_top_admin_menu()
 	{
+		
 		global $wp_admin_bar;
 
 		// Build top menu url with nonce protection
@@ -102,6 +103,7 @@ class WSA_Cachepurge_WP
 	 */
 	public static function add_tools_menu()
 	{
+
 		add_management_page(
 			__('Module de cache', 'wsa-cachepurge'),
 			WSA_CACHEPURGE_NAME,
@@ -121,6 +123,7 @@ class WSA_Cachepurge_WP
 	 */
 	public static function add_settings_link($links)
 	{
+
 		$linkToAdd = '<a href="tools.php?' .
 			'page=wsa-cachepurge/lib/wsa-cachepurge_display.php">' .
 			__("Réglages", "wsa-cachepurge") . '</a>';
@@ -169,6 +172,7 @@ class WSA_Cachepurge_WP
 	 */
 	public static function activate()
 	{
+
 		// Check if the option already exist 
 		if (!get_option('wsa-cachepurge_auto-purge')) {
 
@@ -189,6 +193,12 @@ class WSA_Cachepurge_WP
 				delete_option('cpwsa_auto-purge', "on");
 			}
 		}
+
+		// Check if the option already exist 
+		if (!get_option('wsa-cachepurge_wsa-installed')) {
+			
+			update_option('wsa-cachepurge_wsa-installed', 0);
+		}
 	}
 
 	/**
@@ -200,18 +210,26 @@ class WSA_Cachepurge_WP
 	 */
 	public static function uninstall()
 	{
+
 		// Check if the option already exist 
 		if (get_option('cpwsa_auto-purge')) {
 
 			// remove the option we added in the db
-			delete_option('cpwsa_auto-purge', "on");
+			delete_option('cpwsa_auto-purge');
 		}
 
 		// Check if the option already exist 
 		if (get_option('wsa-cachepurge_auto-purge')) {
 
 			// remove the option we added in the db
-			delete_option('wsa-cachepurge_auto-purge', "on");
+			delete_option('wsa-cachepurge_auto-purge');
+		}
+
+		// Check if the option already exist
+		if (get_option('wsa-cachepurge_wsa-installed')) {
+
+			// remove the option we added in the db
+			delete_option('wsa-cachepurge_wsa-installed');
 		}
 	}
 
