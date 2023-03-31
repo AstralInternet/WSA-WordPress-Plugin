@@ -9,7 +9,7 @@
  * WSA - Website Accelerator Cache Purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.1.0
+ * @version         1.1.1
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -190,7 +190,7 @@ class WSA_Cachepurge_WP
 	public static function activate()
 	{
 		// Parse each options used by the module
-		foreach (WP_OPTIONS_LIST as $singleOptions) {
+		foreach (WSA_Cachepurge_WP::WP_OPTIONS_LIST as $singleOptions) {
 
 			// Check if the option already exist 
 			if (!get_option($singleOptions)) {
@@ -225,7 +225,7 @@ class WSA_Cachepurge_WP
 	public static function uninstall()
 	{
 		// Parse each options used by the module
-		foreach (WP_OPTIONS_LIST as $singleOptions) {
+		foreach (WSA_Cachepurge_WP::WP_OPTIONS_LIST as $singleOptions) {
 
 			// First check if the options exist
 			if (get_option($singleOptions)) {

@@ -4,7 +4,7 @@ Tags: cache, purge, wsa, cpwsa, wsa-cachepurge, website acceleration
 Requires at least: 3.5
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,9 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed const for PHP 8.1.
 
 = 1.1.0 =
 * Updated the WSA module class to the version 1.1.0 (was previouly on version 1.0.0)
