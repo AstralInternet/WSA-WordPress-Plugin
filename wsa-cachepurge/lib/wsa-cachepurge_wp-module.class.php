@@ -273,34 +273,19 @@ class WSA_Cachepurge_WP
 	{
 
 		// On clear all cache
-		add_action(
-			'w3tc_flush_all',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
+		add_action('w3tc_flush_all', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 
 		// On purge all post
-		add_action(
-			'w3tc_flush_posts',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
+		add_action('w3tc_flush_posts', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 
 		// On browser cache purge
-		add_action(
-			'w3tc_flush_after_browsercache',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
+		add_action('w3tc_flush_after_browsercache', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 
 		// On minify object cache purge
-		add_action(
-			'w3tc_flush_after_minify',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
+		add_action('w3tc_flush_after_minify', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 
 		// After Object cache flush
-		add_action(
-			'w3tc_flush_after_objectcache',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
+		add_action('w3tc_flush_after_objectcache', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 	}
 
 	/**
@@ -313,7 +298,7 @@ class WSA_Cachepurge_WP
 	{
 
 		// On clear all cache
-		add_action('wp_cache_cleared', 'WSA_Cachepurge_WP::purge_cache();');
+		add_action('wp_cache_cleared', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 	}
 
 	/**
@@ -326,10 +311,10 @@ class WSA_Cachepurge_WP
 	{
 
 		// On clear cache
-		add_action('wpfc_delete_cache', 'WSA_Cachepurge_WP::purge_cache();');
+		add_action('wpfc_delete_cache', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 
 		// On clear all cache
-		add_action('wpfc_clear_all_cache', 'WSA_Cachepurge_WP::purge_cache();');
+		add_action('wpfc_clear_all_cache', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 	}
 
 	/**
@@ -342,13 +327,10 @@ class WSA_Cachepurge_WP
 	{
 
 		// Clear page cache
-		add_action(
-			'autoptimize_action_cachepurged',
-			'WSA_Cachepurge_WP::purge_cache();'
-		);
+		add_action('autoptimize_action_cachepurged', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 
 		// On clear all cache
-		add_action('cachify_flush_cache', 'WSA_Cachepurge_WP::purge_cache();');
+		add_action('cachify_flush_cache', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 	}
 
 	/**
@@ -361,6 +343,6 @@ class WSA_Cachepurge_WP
 	{
 
 		// On clear all cache
-		add_action('litespeed_cache_api_purge', 'WSA_Cachepurge_WP::purge_cache();');
+		add_action('litespeed_cache_api_purge', array( new WSA_Cachepurge_WP, 'purge_cache' ));
 	}
 }
