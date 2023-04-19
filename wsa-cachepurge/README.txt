@@ -32,6 +32,7 @@ This plugin will function on servers that have the Website Accelerator installed
 
 = 1.1.2 =
 * Removed deprecated code
+* Fix : Change the way the hook was made to listen to other cache extensions.
 
 = 1.1.1 =
 * Fixed const for PHP 8.1.
