@@ -45,7 +45,7 @@ defined('ABSPATH') or die('No script kiddies please!');
  *
  * @since 1.0.0
  */
-define('WSA_CACHEPURGE_VERSION', '1.1.0');
+define('WSA_CACHEPURGE_VERSION', '1.1.2');
 
 /**
  * Store the plugin name.
