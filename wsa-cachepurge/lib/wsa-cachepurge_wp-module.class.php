@@ -188,7 +188,7 @@ class WSA_Cachepurge_WP
 						break;
 				}
 
-				// add/update tthe option in the WP database
+				// add/update the option in the WP database
 				update_option($singleOptions, $value, false);
 			}
 		}
