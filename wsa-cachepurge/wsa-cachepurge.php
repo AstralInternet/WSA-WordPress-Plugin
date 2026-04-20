@@ -18,8 +18,9 @@
  * License URI:			http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: 		wsa-cachepurge
  * Domain Path:     	/i18n
- * Requires at least:	3.5.0
- * Requires PHP:		5.6
+ * Requires at least:	5.0
+ * Tested up to:		6.9
+ * Requires PHP:		7.4
  *
  * wsa-cachepurge : The Astral Internet Website Accelerator is a tool that allows you to place 
  * certain elements of a site in buffer memory (cache) inside the server. Once the 

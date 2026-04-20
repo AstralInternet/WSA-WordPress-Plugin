@@ -85,7 +85,7 @@ msgstr "Le nettoyage automatique a été désactivé"
 
 #: lib/wsa-cachepurge_display.class.php:172
 msgid ""
-"La cache se se videra plus automatiquement lors de la modification d'une "
+"La cache ne se videra plus automatiquement lors de la modification d'une "
 "page ou d'un article."
 msgstr ""
 "La cache ne se videra plus automatiquement lors de la modification d'une "

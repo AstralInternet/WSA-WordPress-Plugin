@@ -52,20 +52,28 @@ $messageType = "";
 /**
  * Post trust verification
  *
+ * All $_POST values are passed through wp_unslash() + sanitize_text_field()
+ * before use, per WordPress Coding Standards. This also keeps the code quiet
+ * on PHP 8.1+, where implicit string conversions of slashed input can emit
+ * deprecation notices.
+ *
  * @since 1.1.0
+ * @version 1.2.0
  */
-if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'wsa-cachepurge')) {
+$nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+$action = isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : '';
 
-    switch ($_POST['action']) {
+if ($action !== '' && wp_verify_nonce($nonce, 'wsa-cachepurge')) {
+
+    switch ($action) {
 
         // Update the "auto purge" setting in Wordpress
         // Trigger when user click on the auto purge checkbox
         case 'autoPurge':
-            if (isset($_POST['wsa-cachepurge-cachepurge_save']) && $_POST['wsa-cachepurge-cachepurge_save'] == "on") {
-                update_option('wsa-cachepurge_auto-purge', 1);
-            } else {
-                update_option('wsa-cachepurge_auto-purge', 0);
-            }
+            $saveVal = isset($_POST['wsa-cachepurge-cachepurge_save'])
+                ? sanitize_text_field(wp_unslash($_POST['wsa-cachepurge-cachepurge_save']))
+                : '';
+            update_option('wsa-cachepurge_auto-purge', ($saveVal === 'on') ? 1 : 0);
 
             $messageType = "autoPurge";
             break;
@@ -76,7 +84,7 @@ if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST[
         // Trigger when user changes the auto purge mode radio buttons
         case 'autoPurgeMode':
             $submittedMode = isset($_POST['wsa-cachepurge_auto-purge-mode'])
-                ? $_POST['wsa-cachepurge_auto-purge-mode']
+                ? sanitize_text_field(wp_unslash($_POST['wsa-cachepurge_auto-purge-mode']))
                 : '';
             $newMode = ($submittedMode === 'url') ? 'url' : 'full';
             update_option('wsa-cachepurge_auto-purge-mode', $newMode, false);
@@ -434,7 +442,7 @@ $autoPurgeEnabled = (get_option('wsa-cachepurge_auto-purge') == 1);
                 <?php if (!empty($statusbox['information'])) { ?>
                     <span class="wsa-status__tooltip">
                         <span class="wsa-status__info" tabindex="0" aria-label="<?=esc_attr__("Plus d'information", "wsa-cachepurge");?>">i</span>
-                        <span class="wsa-status__info-text"><?=$statusbox['information']?></span>
+                        <span class="wsa-status__info-text"><?=esc_html($statusbox['information'])?></span>
                     </span>
                 <?php } ?>
             </span>
@@ -465,8 +473,8 @@ $autoPurgeEnabled = (get_option('wsa-cachepurge_auto-purge') == 1);
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         </div>
         <div>
-            <div class="wsa-toast__title"><?=$messageBox['title'];?></div>
-            <div class="wsa-toast__msg"><?=$messageBox['message'];?></div>
+            <div class="wsa-toast__title"><?=esc_html($messageBox['title']);?></div>
+            <div class="wsa-toast__msg"><?=esc_html($messageBox['message']);?></div>
         </div>
         <button type="button" class="wsa-toast__close" onClick="removeDiv()" aria-label="<?=esc_attr__("Fermer", "wsa-cachepurge");?>">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>

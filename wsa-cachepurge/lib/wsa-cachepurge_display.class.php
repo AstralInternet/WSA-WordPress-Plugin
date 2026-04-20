@@ -169,7 +169,7 @@ class WSA_Display
                     $data['message'] = __("La cache se videra automatiquement lors de la modification d'une page ou d'un article.", "wsa-cachepurge");
                 } else {
                     $data['title'] = __("Le nettoyage automatique a été désactivé", "wsa-cachepurge");
-                    $data['message'] = __("La cache se se videra plus automatiquement lors de la modification d'une page ou d'un article.", "wsa-cachepurge");
+                    $data['message'] = __("La cache ne se videra plus automatiquement lors de la modification d'une page ou d'un article.", "wsa-cachepurge");
                 }
 
                 $data['styleColor'] = "good";

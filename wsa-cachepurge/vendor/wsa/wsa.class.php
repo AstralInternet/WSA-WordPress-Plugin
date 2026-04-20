@@ -427,8 +427,10 @@ class WSA
         $output = curl_exec($ch);
         curl_close($ch);
 
-        // return the page header request
-        return $output;
+        // curl_exec returns false on failure; normalise to an empty string so
+        // downstream callers can feed the value to strpos() without tripping
+        // the PHP 8.1+ deprecation on non-string haystacks.
+        return is_string($output) ? $output : '';
     }
 
     /**
@@ -451,9 +453,19 @@ class WSA
             $urlPrefix = "";
         }
 
-        // Return a usable site url, using HTTP_HOST if defined
-        return $urlPrefix . (isset($_SERVER['HTTP_HOST']) ?
-            $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
+        // Return a usable site url, using HTTP_HOST if defined. Fall back to
+        // SERVER_NAME and finally to an empty host so a CLI context (where
+        // neither is set) cannot raise an undefined-index warning under
+        // PHP 8.x.
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $host = $_SERVER['HTTP_HOST'];
+        } elseif (isset($_SERVER['SERVER_NAME'])) {
+            $host = $_SERVER['SERVER_NAME'];
+        } else {
+            $host = '';
+        }
+
+        return $urlPrefix . $host;
     }
 
     /**
