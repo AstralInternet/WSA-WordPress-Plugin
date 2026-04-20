@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: wsa-cachepurge\n"
-"POT-Creation-Date: 2021-11-26 16:17-0500\n"
-"PO-Revision-Date: 2021-11-26 16:18-0500\n"
+"Project-Id-Version: wsa-cachepurge 1.2.0\n"
+"POT-Creation-Date: 2026-04-20 12:00-0500\n"
+"PO-Revision-Date: 2026-04-20 12:00-0500\n"
 "Last-Translator: \n"
 "Language-Team: Astral 360\n"
 "Language: fr_FR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr__;esc_html__\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: lib/wsa-cachepurge_display.class.php:91
@@ -88,22 +88,50 @@ msgid ""
 "La cache se se videra plus automatiquement lors de la modification d'une "
 "page ou d'un article."
 msgstr ""
-"La cache se se videra plus automatiquement lors de la modification d'une "
+"La cache ne se videra plus automatiquement lors de la modification d'une "
 "page ou d'un article."
 
-#: lib/wsa-cachepurge_display.php:154
-msgid "Website Accelerator - Vidage de cache"
-msgstr "Website Accelerator - Vidage de cache"
+#: lib/wsa-cachepurge_display.class.php:183
+msgid "Mode de vidage automatique : page uniquement"
+msgstr "Mode de vidage automatique : page uniquement"
 
-#: lib/wsa-cachepurge_display.php:158
-msgid "Le module est"
-msgstr "Le module est"
+#: lib/wsa-cachepurge_display.class.php:184
+msgid ""
+"Seule la cache de la page ou de l'article modifié sera vidée lors d'une "
+"modification."
+msgstr ""
+"Seule la cache de la page ou de l'article modifié sera vidée lors d'une "
+"modification."
 
-#: lib/wsa-cachepurge_display.php:166
-msgid "Vérification avancée"
-msgstr "Vérification avancée"
+#: lib/wsa-cachepurge_display.class.php:186
+msgid "Mode de vidage automatique : site au complet"
+msgstr "Mode de vidage automatique : site au complet"
 
-#: lib/wsa-cachepurge_display.php:174
+#: lib/wsa-cachepurge_display.class.php:187
+msgid "La cache du site au complet sera vidée lors d'une modification."
+msgstr "La cache du site au complet sera vidée lors d'une modification."
+
+#: lib/wsa-cachepurge_display.php:422
+msgid "Website Accelerator"
+msgstr "Website Accelerator"
+
+#: lib/wsa-cachepurge_display.php:423
+msgid "Vidage de cache serveur par Astral Internet"
+msgstr "Vidage de cache serveur par Astral Internet"
+
+#: lib/wsa-cachepurge_display.php:430
+msgid "Module"
+msgstr "Module"
+
+#: lib/wsa-cachepurge_display.php:433
+msgid "Plus d'information"
+msgstr "Plus d'information"
+
+#: lib/wsa-cachepurge_display.php:442
+msgid "Vérifier"
+msgstr "Vérifier"
+
+#: lib/wsa-cachepurge_display.php:450
 msgid ""
 "L’accélérateur de site web d’<a href=\"https://www.astralinternet.com/"
 "\">Astral Internet</a> est un outil qui permet de placer certains éléments "
@@ -117,17 +145,17 @@ msgstr ""
 "fois les éléments du site dans la mémoire tampon du serveur, ceux-ci seront "
 "servis beaucoup plus rapidement aux visiteurs visionnant votre site."
 
-#: lib/wsa-cachepurge_display.php:175
+#: lib/wsa-cachepurge_display.php:451
 msgid ""
 "Pour plus d'information concernant ce module, veuillez lire l’article "
 "suivant « <a href=\"https://www.astralinternet.com/produit/fini-les-sites-"
-"trop-lents/\">Fini les sites web trop lents!</a> »."
+"trop-lents/\">Fini les sites web trop lents!</a> »."
 msgstr ""
 "Pour plus d'information concernant ce module, veuillez lire l’article "
 "suivant « <a href=\"https://www.astralinternet.com/produit/fini-les-sites-"
-"trop-lents/\">Fini les sites web trop lents!</a> »."
+"trop-lents/\">Fini les sites web trop lents!</a> »."
 
-#: lib/wsa-cachepurge_display.php:176
+#: lib/wsa-cachepurge_display.php:452
 msgid ""
 "La documentation complète du module est également disponible <a href="
 "\"https://docs.astral360.com/\">ici</a>."
@@ -135,11 +163,15 @@ msgstr ""
 "La documentation complète du module est également disponible <a href="
 "\"https://docs.astral360.com/\">ici</a>."
 
-#: lib/wsa-cachepurge_display.php:197
+#: lib/wsa-cachepurge_display.php:465
+msgid "Fermer"
+msgstr "Fermer"
+
+#: lib/wsa-cachepurge_display.php:478
 msgid "Vider la mémoire cache"
 msgstr "Vider la mémoire cache"
 
-#: lib/wsa-cachepurge_display.php:198
+#: lib/wsa-cachepurge_display.php:479
 msgid ""
 "Il est possible qu'après avoir modifié une page de votre site, le changement "
 "ne soit pas visible instantanément. Lorsque c’est le cas, cela signifie que "
@@ -153,15 +185,15 @@ msgstr ""
 "Vider la cache forcera le serveur à récupérer une nouvelle version de votre "
 "site, à jour, ainsi votre modification sera visible pour tous."
 
-#: lib/wsa-cachepurge_display.php:206 lib/wsa-cachepurge_wp-module.class.php:99
+#: lib/wsa-cachepurge_display.php:488 lib/wsa-cachepurge_wp-module.class.php:99
 msgid "Vider la cache"
 msgstr "Vider la cache"
 
-#: lib/wsa-cachepurge_display.php:210
-msgid "Notes :"
-msgstr "Notes :"
+#: lib/wsa-cachepurge_display.php:492
+msgid "Notes"
+msgstr "Notes"
 
-#: lib/wsa-cachepurge_display.php:211
+#: lib/wsa-cachepurge_display.php:493
 msgid ""
 "En aucun cas, vider la mémoire cache ne peut affecter le bon fonctionnement "
 "de votre site."
@@ -169,7 +201,7 @@ msgstr ""
 "En aucun cas, vider la mémoire cache ne peut affecter le bon fonctionnement "
 "de votre site."
 
-#: lib/wsa-cachepurge_display.php:213
+#: lib/wsa-cachepurge_display.php:494
 msgid ""
 "Si les changements ou les modifications dans votre site ne sont toujours pas "
 "visibles :"
@@ -177,7 +209,7 @@ msgstr ""
 "Si les changements ou les modifications dans votre site ne sont toujours pas "
 "visibles :"
 
-#: lib/wsa-cachepurge_display.php:215
+#: lib/wsa-cachepurge_display.php:496
 msgid ""
 "Assurez-vous d’avoir bien enregistré les modifications dans vos pages/"
 "articles."
@@ -185,7 +217,7 @@ msgstr ""
 "Assurez-vous d’avoir bien enregistré les modifications dans vos pages/"
 "articles."
 
-#: lib/wsa-cachepurge_display.php:216
+#: lib/wsa-cachepurge_display.php:497
 msgid ""
 "Si vous utilisez une extension de mise en cache comme WP Rocket, Swift, W3 "
 "Total Cache, WP Super Cache ou autre, assurez-vous de bien vider la mémoire "
@@ -195,7 +227,7 @@ msgstr ""
 "Total Cache, WP Super Cache ou autre, assurez-vous de bien vider la mémoire "
 "cache de celles-ci avant de vider la cache du serveur."
 
-#: lib/wsa-cachepurge_display.php:217
+#: lib/wsa-cachepurge_display.php:498
 msgid ""
 "Si vous utilisez un CDN (Content Delivery Network) comme CloudFlare, assurez-"
 "vous que celui-ci est en mode de développement et/ou que la cache du CDN est "
@@ -205,13 +237,61 @@ msgstr ""
 "vous que celui-ci est en mode de développement et/ou que la cache du CDN est "
 "également vidée."
 
-#: lib/wsa-cachepurge_display.php:234
+#: lib/wsa-cachepurge_display.php:511
+msgid "Automatisation"
+msgstr "Automatisation"
+
+#: lib/wsa-cachepurge_display.php:512
+msgid "Configurez ce qui se passe lorsqu'une page ou un article est modifié."
+msgstr "Configurez ce qui se passe lorsqu'une page ou un article est modifié."
+
+#: lib/wsa-cachepurge_display.php:518
+msgid "Vidage automatique"
+msgstr "Vidage automatique"
+
+#: lib/wsa-cachepurge_display.php:519
 msgid ""
-"Lorsqu’activée, la cache du serveur sera vidée automatiquement à chaque "
+"Lorsqu’activé, la cache du serveur sera vidée automatiquement à chaque "
 "changement effectué dans une page ou un article."
 msgstr ""
-"Lorsqu’activée, la cache du serveur sera vidée automatiquement à chaque "
+"Lorsqu’activé, la cache du serveur sera vidée automatiquement à chaque "
 "changement effectué dans une page ou un article."
+
+#: lib/wsa-cachepurge_display.php:528
+msgid "Mode de vidage"
+msgstr "Mode de vidage"
+
+#: lib/wsa-cachepurge_display.php:529
+msgid ""
+"Choisissez entre vider tout le site ou uniquement la page/l'article qui "
+"vient d'être modifié."
+msgstr ""
+"Choisissez entre vider tout le site ou uniquement la page/l'article qui "
+"vient d'être modifié."
+
+#: lib/wsa-cachepurge_display.php:538
+msgid "Site au complet"
+msgstr "Site au complet"
+
+#: lib/wsa-cachepurge_display.php:539
+msgid ""
+"Vide toute la cache du domaine lors d'une modification. Recommandé si vos "
+"pages partagent des éléments communs (menus, widgets, etc.)."
+msgstr ""
+"Vide toute la cache du domaine lors d'une modification. Recommandé si vos "
+"pages partagent des éléments communs (menus, widgets, etc.)."
+
+#: lib/wsa-cachepurge_display.php:543
+msgid "Page uniquement"
+msgstr "Page uniquement"
+
+#: lib/wsa-cachepurge_display.php:544
+msgid ""
+"Ne vide que la cache de la page ou de l'article modifié. Plus rapide et plus "
+"efficace pour les sites à fort trafic."
+msgstr ""
+"Ne vide que la cache de la page ou de l'article modifié. Plus rapide et plus "
+"efficace pour les sites à fort trafic."
 
 #: lib/wsa-cachepurge_wp-module.class.php:115
 msgid "Module de cache"
@@ -236,6 +316,25 @@ msgstr ""
 #: wsa-cachepurge.php:38
 msgid "https://www.astralinternet.com/fr"
 msgstr "https://www.astralinternet.com/fr"
+
+#~ msgid "Website Accelerator - Vidage de cache"
+#~ msgstr "Website Accelerator - Vidage de cache"
+
+#~ msgid "Le module est"
+#~ msgstr "Le module est"
+
+#~ msgid "Vérification avancée"
+#~ msgstr "Vérification avancée"
+
+#~ msgid "Notes :"
+#~ msgstr "Notes :"
+
+#~ msgid ""
+#~ "Lorsqu’activée, la cache du serveur sera vidée automatiquement à chaque "
+#~ "changement effectué dans une page ou un article."
+#~ msgstr ""
+#~ "Lorsqu’activée, la cache du serveur sera vidée automatiquement à chaque "
+#~ "changement effectué dans une page ou un article."
 
 #~ msgid "Appuyer ici pour plus d'information"
 #~ msgstr "Appuyer ici pour plus d'information"

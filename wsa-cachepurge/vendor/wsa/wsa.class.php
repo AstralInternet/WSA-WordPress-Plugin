@@ -9,7 +9,7 @@
  * Astral Internet - Website Acceleration class
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.1.1
+ * @version         1.2.0
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. -
  *                  support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General
@@ -49,6 +49,20 @@
  *  $p_fullPath  : Allow you to override the default ".wsa" folder. If for som
  *                 reason the class cannot find the path, it can be manually
  *                 specified.
+ *
+ * WSA::purge_url (string|string[] $p_urls, string $p_fullPath = null)
+ *  : Page-level complement to purge_cache. Appends one line per URL to the
+ *  : empty.me file in the format "URL:<url>, DOMAIN:<host>". The WSA daemon
+ *  : picks up each line, validates the domain against the cPanel user, and
+ *  : purges only the listed pages — leaving the rest of the cache intact.
+ *
+ *  $p_urls      : Single URL string or an array of URLs. Each entry must be
+ *                 a fully qualified URL (http:// or https://). Malformed
+ *                 entries are silently skipped so a bad URL does not abort
+ *                 a batch request.
+ *
+ *  $p_fullPath  : Optional override for the ".wsa" folder location, same
+ *                 semantics as in purge_cache.
  *
  */
 
@@ -175,6 +189,148 @@ class WSA
     }
 
     /**
+     * Queue one or more specific URLs for cache purge.
+     *
+     * Each URL is appended to empty.me as a single line in the format:
+     *   URL:<url>, DOMAIN:<host>
+     *
+     * The WSA daemon on the server side consumes the file, validates that
+     * <host> belongs to the cPanel user, and purges only the matching cache
+     * entries. This is the page-level complement to purge_cache(), which
+     * targets a full domain or the whole user cache.
+     *
+     * If empty.me already exists (e.g. a previous call has not yet been
+     * processed by the daemon) the new lines are appended instead of
+     * overwriting, so concurrent purge requests never cancel each other.
+     *
+     * @param string|string[] $p_urls     Single URL or list of URLs. Each
+     *                                    URL must start with http:// or
+     *                                    https://. Non-string, empty, or
+     *                                    malformed entries are skipped.
+     * @param string|null     $p_fullPath Optional override for the .wsa
+     *                                    folder location (same semantics
+     *                                    as purge_cache).
+     *
+     * @return bool  True when at least one valid URL line was written,
+     *               false when no URL validated, the .wsa folder could
+     *               not be located, or the write itself failed.
+     *
+     * @since 1.2.0
+     */
+    public static function purge_url($p_urls, $p_fullPath = null)
+    {
+        // Accept a single URL as convenience; normalise to an array so the
+        // rest of the method does not have to care about the input shape.
+        if (is_string($p_urls)) {
+            $p_urls = array($p_urls);
+        }
+        if (!is_array($p_urls) || empty($p_urls)) {
+            return false;
+        }
+
+        // Validate each URL independently. We keep the survivors so a
+        // single malformed entry never aborts a batch request.
+        $validEntries = array();
+        foreach ($p_urls as $url) {
+
+            // Skip anything that is not a non-empty string up front.
+            if (!is_string($url)) {
+                continue;
+            }
+            $url = trim($url);
+            if ($url === '') {
+                continue;
+            }
+
+            // Require an explicit scheme: the server-side cache key is
+            // built from $scheme, so "example.com/page" cannot resolve.
+            if (!preg_match('#^https?://#i', $url)) {
+                continue;
+            }
+
+            // Pull the host so the daemon can cross-check ownership
+            // without re-parsing the URL itself.
+            $parsed = parse_url($url);
+            if (empty($parsed['host'])) {
+                continue;
+            }
+            $host = strtolower($parsed['host']);
+
+            // Only allow valid DNS characters to reach the daemon.
+            if (!preg_match('/^[a-z0-9.\-]+$/', $host)) {
+                continue;
+            }
+
+            $validEntries[] = 'URL:' . $url . ', DOMAIN:' . $host;
+        }
+
+        // Nothing survived validation — nothing to write.
+        if (empty($validEntries)) {
+            return false;
+        }
+
+        // Locate (and create if needed) the user's .wsa folder.
+        $absPath = self::resolve_wsa_folder($p_fullPath);
+        if ($absPath === '') {
+            return false;
+        }
+
+        // One entry per line, always terminated so appends stay clean.
+        $payload = implode("\n", $validEntries) . "\n";
+
+        // Append rather than overwrite, so pending purges the daemon has
+        // not yet consumed are preserved. LOCK_EX keeps concurrent writers
+        // from interleaving partial lines.
+        $filePath = $absPath . 'empty.me';
+        $written  = @file_put_contents($filePath, $payload, FILE_APPEND | LOCK_EX);
+
+        return $written !== false;
+    }
+
+    /**
+     * Locate the user's ".wsa" folder using the same rules as purge_cache:
+     * honour the caller-supplied path first, otherwise fall back to the
+     * cPanel-style directory probe. The folder is created on first use
+     * when the caller did not supply an explicit path.
+     *
+     * Always returns a path that ends with "/" so callers can concatenate
+     * a filename directly.
+     *
+     * @param string|null $p_fullPath  Optional override.
+     * @return string  Absolute path ending with "/" on success, "" on failure.
+     *
+     * @since 1.2.0
+     */
+    private static function resolve_wsa_folder($p_fullPath = null)
+    {
+        // Try the caller-provided path first. Trailing slash is enforced
+        // here so downstream concatenation is safe.
+        if ($p_fullPath != null) {
+            $absPath = '/' . trim($p_fullPath, '/') . '/' . self::WSA_CACHE_PATH . '/';
+            if (is_writable($absPath)) {
+                return $absPath;
+            }
+        }
+
+        // Fall back to the directory-walking discovery used by purge_cache.
+        $absPath = self::find_absolute_path_by_dir();
+        if ($absPath === '') {
+            return '';
+        }
+
+        // Create the folder on first use. 0750 keeps it readable by the
+        // cPanel user and the nginx group without exposing it world-wide.
+        if (!is_dir($absPath)) {
+            if (!@mkdir($absPath, 0750)) {
+                return '';
+            }
+            return $absPath;
+        }
+
+        return is_writable($absPath) ? $absPath : '';
+    }
+
+    /**
      * Function that will try to determine if the WSA module is currently
      * installed inside the server. If the function can detect the module, it
      * will return :
@@ -189,7 +345,7 @@ class WSA
      * @return int
      *
      * @since 1.0.0
-     * @version 1.0.1
+     * @version 1.1.0
      */
     public static function is_module_installed($p_extendedValidation = false)
     {
@@ -231,7 +387,7 @@ class WSA
      * @return int 0 - not installed
      *             1 - installed
      *
-     * @since 1.0.2
+     * @since 1.1.0
      */
     private static function is_module_installed__extended_validation()
     {

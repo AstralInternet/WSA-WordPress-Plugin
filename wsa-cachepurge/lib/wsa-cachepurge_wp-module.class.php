@@ -9,7 +9,7 @@
  * WSA - Website Accelerator Cache Purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.1.1
+ * @version         1.2.0
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -32,11 +32,27 @@ class WSA_Cachepurge_WP
 {
 
     /**
-     * Define the module options used for the activate and deactivate function
+     * Define the module options used for the activate and deactivate function.
+     *
+     * wsa-cachepurge_auto-purge-mode accepts 'full' (legacy, whole-site purge)
+     * or 'url' (purge only the modified post/page). Added in 1.2.0.
      *
      * @since 1.1.0
+     * @version 1.2.0
      */
-	const WP_OPTIONS_LIST = array('wsa-cachepurge_wsa-installed', 'wsa-cachepurge_auto-purge');
+	const WP_OPTIONS_LIST = array(
+		'wsa-cachepurge_wsa-installed',
+		'wsa-cachepurge_auto-purge',
+		'wsa-cachepurge_auto-purge-mode',
+	);
+
+	/**
+	 * Default auto-purge mode used on fresh installs and whenever the stored
+	 * option is missing or malformed. 'full' keeps pre-1.2.0 behaviour.
+	 *
+	 * @since 1.2.0
+	 */
+	const AUTO_PURGE_MODE_DEFAULT = 'full';
 
 	/**
 	 * Define the locale for this plugin for internationalization.
@@ -142,21 +158,66 @@ class WSA_Cachepurge_WP
 	/**
 	 * Function to start the purge cache procedure if the option for automatic
 	 * purging is activated in the plugin.
-	 * 
+	 *
+	 * Bound to save_post (which passes the post ID) and customize_preview_init
+	 * (which does not). The $p_postId argument is optional so both callers work
+	 * with the same method signature.
+	 *
+	 * When auto-purge-mode is 'url' and we know which post was modified, only
+	 * the permalink of that post is purged. When the mode is 'full', or we
+	 * cannot resolve a usable permalink (e.g. preview init, autosave, trash),
+	 * fall back to the full-site purge so users never end up with stale cache.
+	 *
 	 * @since    1.0.0
-	 * @version  1.1.2
+	 * @version  1.2.0
+	 * @param    int|null $p_postId Post ID supplied by save_post, null otherwise.
 	 * @return void
 	 */
-	public static function purge_hooks()
+	public static function purge_hooks($p_postId = null)
 	{
 
 		// Fetch the auto purge setting
 		$autoPurge = get_option('wsa-cachepurge_auto-purge');
 
-		// Clear the WSA cache
-		if ($autoPurge) {
-			WSAHandler\WSA::purge_cache();
+		// Nothing to do when auto-purge is disabled.
+		if (!$autoPurge) {
+			return;
 		}
+
+		// Read the mode, defaulting to 'full' if unset or unknown value.
+		$mode = get_option('wsa-cachepurge_auto-purge-mode', self::AUTO_PURGE_MODE_DEFAULT);
+		if ($mode !== 'url') {
+			$mode = self::AUTO_PURGE_MODE_DEFAULT;
+		}
+
+		// URL mode: only purge the modified post's permalink when we can
+		// resolve it. Skip revisions/autosaves/unpublished items — their
+		// permalinks are either unstable or not cacheable, so a full purge
+		// is more accurate than trying to purge a throwaway URL.
+		if ($mode === 'url' && $p_postId) {
+
+			// Ignore revisions and autosaves: these fire save_post but are
+			// not the content served from cache.
+			if (wp_is_post_revision($p_postId) || wp_is_post_autosave($p_postId)) {
+				return;
+			}
+
+			// Only public, published posts have a cacheable permalink.
+			$status = get_post_status($p_postId);
+			if ($status === 'publish') {
+				$permalink = get_permalink($p_postId);
+				if (is_string($permalink) && $permalink !== '') {
+					WSAHandler\WSA::purge_url($permalink);
+					return;
+				}
+			}
+
+			// Fall through to full purge when URL mode cannot be honoured
+			// (e.g. unpublishing a post: the old URL still sits in cache).
+		}
+
+		// Full-site purge (legacy behaviour and URL-mode fallback).
+		WSAHandler\WSA::purge_cache();
 	}
 
 	/**
@@ -164,7 +225,7 @@ class WSA_Cachepurge_WP
 	 * the automatic purge trigger.
 	 * 
 	 * @since    1.0.0
-	 * @version  1.1.0
+	 * @version  1.2.0
 	 * @return void
 	 */
 	public static function activate()
@@ -172,7 +233,7 @@ class WSA_Cachepurge_WP
 		// Parse each options used by the module
 		foreach (WSA_Cachepurge_WP::WP_OPTIONS_LIST as $singleOptions) {
 
-			// Check if the option already exist 
+			// Check if the option already exist
 			if (!get_option($singleOptions)) {
 
 				// Define the option value
@@ -183,12 +244,20 @@ class WSA_Cachepurge_WP
 						$value=1;
 						break;
 
+					// Default the mode to 'full' so upgrading sites keep
+					// the exact behaviour they had before 1.2.0.
+					case 'wsa-cachepurge_auto-purge-mode':
+						$value = self::AUTO_PURGE_MODE_DEFAULT;
+						break;
+
 					default:
 						$value=0;
 						break;
 				}
 
-				// add/update the option in the WP database
+				// Store the option without autoload: these settings are
+				// only read from the admin screen and the save_post hook,
+				// so there is no reason to load them on every request.
 				update_option($singleOptions, $value, false);
 			}
 		}

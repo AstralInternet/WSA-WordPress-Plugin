@@ -4,7 +4,7 @@ Tags: cache, purge, wsa, cpwsa, wsa-cachepurge, website acceleration
 Requires at least: 3.5
 Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 1.1.3
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,12 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.2.0 =
+* New per-page cache purge mode: when a post or page is updated, only the cache of that specific URL is cleared (the whole-site purge is still available and remains the default).
+* Added a new setting under the plugin page to choose between full-site purge and single-URL purge.
+* Updated the bundled WSA PHP class to version 1.2.0, which introduces the new `WSA::purge_url()` method used by the per-page mode.
+* Revisions, autosaves and unpublished posts no longer trigger a useless purge when the per-page mode is active; unpublishing a post still falls back to a full purge so the old URL does not stay cached.
 
 = 1.1.3 =
 * Change the autoload options in the wp_option table from true (default WordPress value) to false to save memory usage.

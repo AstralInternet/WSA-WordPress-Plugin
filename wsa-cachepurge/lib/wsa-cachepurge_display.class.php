@@ -9,7 +9,7 @@
  * WSA - Website Accelerator Cache Purge - Admin area display logic
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.1.1
+ * @version         1.2.0
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -172,6 +172,23 @@ class WSA_Display
                     $data['message'] = __("La cache se se videra plus automatiquement lors de la modification d'une page ou d'un article.", "wsa-cachepurge");
                 }
 
+                $data['styleColor'] = "good";
+                $data['animation'] = false;
+                break;
+
+            // Feedback when the admin switches between full-site and
+            // per-URL auto-purge mode. Keeping the two messages in one
+            // place means the UI stays in sync with whatever value we
+            // actually persisted in wsa-cachepurge_auto-purge-mode.
+            case 'autoPurgeMode':
+                $storedMode = get_option('wsa-cachepurge_auto-purge-mode', 'full');
+                if ($storedMode === 'url') {
+                    $data['title'] = __("Mode de vidage automatique : page uniquement", "wsa-cachepurge");
+                    $data['message'] = __("Seule la cache de la page ou de l'article modifié sera vidée lors d'une modification.", "wsa-cachepurge");
+                } else {
+                    $data['title'] = __("Mode de vidage automatique : site au complet", "wsa-cachepurge");
+                    $data['message'] = __("La cache du site au complet sera vidée lors d'une modification.", "wsa-cachepurge");
+                }
                 $data['styleColor'] = "good";
                 $data['animation'] = false;
                 break;
