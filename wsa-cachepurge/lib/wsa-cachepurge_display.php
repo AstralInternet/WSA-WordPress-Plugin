@@ -9,7 +9,7 @@
  * WSA - Website Accelerator Cache Purge - Admin area display
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.2.0
+ * @version         1.2.2
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -190,13 +190,10 @@ $autoPurgeEnabled = (get_option('wsa-cachepurge_auto-purge') == 1);
 .wsa-hero__brand { display: flex; align-items: center; gap: 18px; min-width: 0; }
 .wsa-hero__logo {
     width: 56px; height: 56px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--wsa-accent) 0%, var(--wsa-accent-dark) 100%);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: var(--wsa-shadow-lg);
     flex-shrink: 0;
 }
-.wsa-hero__logo img { height: 32px; width: 32px; filter: brightness(0) invert(1); }
+.wsa-hero__logo img { display: block; height: 56px; width: 56px; }
 .wsa-hero__title h1 {
     margin: 0;
     font-size: 22px;

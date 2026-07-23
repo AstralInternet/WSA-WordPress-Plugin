@@ -9,7 +9,7 @@
  * WSA - Website Accelerator Cache Purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.2.1
+ * @version         1.2.2
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.

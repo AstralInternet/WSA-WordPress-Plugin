@@ -4,7 +4,7 @@ Tags: cache, purge, wsa, website acceleration
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -25,10 +25,14 @@ After activation, automatic full-site cache purging is enabled when a page or po
 This plugin will function on servers that have the Website Accelerator installed. If the acceleration module is not installed the module can still be installed and will not break any functionality of the website but will simply be useless.
 
 == Screenshots ==
-1. Main interface.
+1. Main interface with manual and automatic cache purge controls.
 
 
 == Changelog ==
+
+= 1.2.2 =
+* Replaced the WordPress.org screenshot and plugin icon assets, with SVG and PNG icon formats for sharp rendering and compatibility.
+* Updated the logo displayed in the plugin administration interface and adjusted the hero styling to preserve the new logo's colors.
 
 = 1.2.1 =
 * Tested and declared compatible with WordPress 7.0.2 (`Tested up to: 7.0`, as required by the WordPress.org readme format).
