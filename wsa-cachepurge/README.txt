@@ -12,13 +12,13 @@ On servers using the website accelerator by Astral Internet, the module offers t
 
 == Description ==
 The Website Accelerator by Astral Internet is a tool that allows you to place certain elements of a site in buffer memory (cache) inside the server. Once the elements are placed buffer of the server, they can be served much faster to people viewing a website.
-The website accelerator maximizes the Nginx caching feature while offering granular configuration for each site. More information concerning the WSA module is available on this blog “[No more slow websites!]( https://www.astralinternet.com/blog/en/no-more-slow-websites/)”.
+The website accelerator maximizes the Nginx caching feature while offering granular configuration for each site. More information concerning the WSA module is available on this blog: [No more slow websites!](https://www.astralinternet.com/blog/en/no-more-slow-websites/).
 
 == Installation ==
 1. Upload the plugin files to the /wp-content/plugins/ directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the ‘Plugins’ screen in WordPress
 
-Upon installation, the default setting will purge the cache upon each page refresh. This cache be disactivated through the plugin interface in the tool’s menu.
+After activation, automatic full-site cache purging is enabled when a page or post is updated. You can change or disable this behavior under Tools > Website Accelerator Cache purge.
 
 == Frequently Asked Questions ==
 = Will this plugin work for me =

@@ -5,7 +5,7 @@
  * 
  * @author            Astral Internet inc.
  * @copyright         2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
- * @license           http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
+ * @license           https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * 
  * @wordpress-plugin
  * Plugin Name: 		WSA - Website Accelerator Cache Purge
@@ -14,8 +14,8 @@
  * Version:         	1.2.1
  * Author:				Astral Internet inc.
  * Author URI:			https://www.astralinternet.com/fr
- * License:				GPL v3
- * License URI:			http://www.gnu.org/licenses/gpl-3.0.html
+ * License:				GPL v3 or later
+ * License URI:			https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: 		wsa-cachepurge
  * Domain Path:     	/i18n
  * Requires at least:	5.0
