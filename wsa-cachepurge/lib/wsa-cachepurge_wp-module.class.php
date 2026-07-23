@@ -9,7 +9,7 @@
  * WSA - Website Accelerator Cache Purge - Plugin class functions
  * 
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.2.0
+ * @version         1.2.1
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. - support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * @link            https://www.astralinternet.com/en Astral Internet inc.
@@ -83,8 +83,8 @@ class WSA_Cachepurge_WP
 			load_plugin_textdomain('wsa-cachepurge', false, $plugin_rel_path);
 		}
 
-		// Add load the language files upon loading the module
-		add_action('plugins_loaded', 'wsa_cachepurge_load_plugin_textdomain');
+		// WordPress 6.7+ warns when translations are loaded before init.
+		add_action('init', 'wsa_cachepurge_load_plugin_textdomain');
 	}
 
 	/**

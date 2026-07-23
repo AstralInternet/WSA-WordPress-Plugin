@@ -1,12 +1,12 @@
 === WSA - Website Accelerator Cache Purge ===
-Contributors: @astralinternet, @neutrall, @sleyeur
-Tags: cache, purge, wsa, cpwsa, wsa-cachepurge, website acceleration
+Contributors: astralinternet, neutrall, sleyeur
+Tags: cache, purge, wsa, website acceleration
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.2.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 1.2.1
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 On servers using the website accelerator by Astral Internet, the module offers the ability to automatically purge the cache when a page is modified.
 
@@ -29,6 +29,11 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.2.1 =
+* Tested and declared compatible with WordPress 7.0.2 (`Tested up to: 7.0`, as required by the WordPress.org readme format).
+* Delayed translation loading until `init` and removed early translation calls to avoid WordPress 6.7+ just-in-time translation warnings.
+* Aligned the WordPress.org metadata with the plugin header and reduced the tags to the five-tag directory limit.
 
 = 1.2.0 =
 * New per-page cache purge mode: when a post or page is updated, only the cache of that specific URL is cleared (the whole-site purge is still available and remains the default).
