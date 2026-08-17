@@ -2,9 +2,9 @@
 Contributors: astralinternet, neutrall, sleyeur
 Tags: cache, purge, wsa, website acceleration
 Requires at least: 5.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,6 +29,10 @@ This plugin will function on servers that have the Website Accelerator installed
 
 
 == Changelog ==
+
+= 1.2.3 =
+* Tested and declared compatible with WordPress 7.1.
+* Prevented PHP warnings during WSA path discovery on environments that do not use the standard cPanel directory layout, including WordPress Playground.
 
 = 1.2.2 =
 * Replaced the WordPress.org screenshot and plugin icon assets, with SVG and PNG icon formats for sharp rendering and compatibility.

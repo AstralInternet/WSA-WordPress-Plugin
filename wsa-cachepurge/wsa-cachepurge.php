@@ -11,7 +11,7 @@
  * Plugin Name: 		WSA - Website Accelerator Cache Purge
  * Plugin URI:      	https://github.com/AstralInternet/WSA-WordPress-Plugin
  * Description:			Automatically purges the Astral Internet Website Accelerator server cache when WordPress content changes.
- * Version:         	1.2.2
+ * Version:         	1.2.3
  * Author:				Astral Internet inc.
  * Author URI:			https://www.astralinternet.com/fr
  * License:				GPL v3 or later
@@ -19,7 +19,7 @@
  * Text Domain: 		wsa-cachepurge
  * Domain Path:     	/i18n
  * Requires at least:	5.0
- * Tested up to:		7.0
+ * Tested up to:		7.1
  * Requires PHP:		7.4
  *
  * wsa-cachepurge : The Astral Internet Website Accelerator is a tool that allows you to place 
@@ -41,7 +41,7 @@ defined('ABSPATH') or die('No script kiddies please!');
  *
  * @since 1.0.0
  */
-define('WSA_CACHEPURGE_VERSION', '1.2.2');
+define('WSA_CACHEPURGE_VERSION', '1.2.3');
 
 /**
  * Store the plugin name.

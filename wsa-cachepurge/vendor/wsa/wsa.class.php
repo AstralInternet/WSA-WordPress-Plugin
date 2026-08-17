@@ -9,7 +9,7 @@
  * Astral Internet - Website Acceleration class
  *
  * @author          Astral Internet inc. <support@astralinternet.com>
- * @version         1.2.0
+ * @version         1.2.1
  * @copyright       2021 Copyright (C) 2021, Astral Internet inc. -
  *                  support@astralinternet.com
  * @license         https://www.gnu.org/licenses/gpl-3.0.html GNU General
@@ -486,21 +486,28 @@ class WSA
          * separated by / character and names can be any char, number or
          * underscore ([a-zA-Z0-9_]).
          */
-        preg_match(
+        $pathMatched = preg_match(
             '/\/([a-zA-Z0-9_]{1,})\/([a-zA-Z0-9_]{1,})\//',
             __DIR__,
             $splittedFolders
         );
 
-        // Build the assume absolute path based on folder
-        $absPath = '/' . $splittedFolders[1] . '/' . $splittedFolders[2] . '/'
-            . self::WSA_CACHE_PATH . '/';
+        // Build the assumed absolute path only when both expected cPanel path
+        // segments were captured. Development environments such as WordPress
+        // Playground use paths that do not match the cPanel layout; indexing
+        // missing capture groups would otherwise emit PHP warnings.
+        if ($pathMatched === 1 && isset($splittedFolders[1], $splittedFolders[2])) {
+            $absPath = '/' . $splittedFolders[1] . '/' . $splittedFolders[2] . '/'
+                . self::WSA_CACHE_PATH . '/';
+        } else {
+            $absPath = '';
+        }
 
         /**
          * If the build path is not valid, try to find a valid path by working
          * up the directory hierarchy.
          */
-        if (!file_exists($absPath)) {
+        if ($absPath === '' || !file_exists($absPath)) {
 
             /**
              * Remove the backslash at the beginning and end of the current
